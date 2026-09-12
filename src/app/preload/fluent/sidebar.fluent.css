@@ -1,0 +1,108 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Natural list geometry remains owned by the webapp and its drag/drop list. */
+html[data-mm-fluent] #SidebarContainer {
+    background: linear-gradient(165deg, rgba(var(--fp-accent-rgb), 0.045), transparent 45%), var(--fp-nav-panel) !important;
+}
+@media (prefers-reduced-transparency: reduce) {
+    html[data-mm-fluent] #SidebarContainer { background: var(--fp-nav) !important; }
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 36px;
+    height: 36px;
+    width: calc(100% - 16px);
+    margin-inline: 8px;
+    padding: 0 36px 0 12px;
+    border: 0;
+    border-radius: 10px;
+    box-shadow: none;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink:is(:hover, .menuOpen) { padding-right: 36px; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelLinkLabel_wrapper { flex: 1; min-width: 0; margin: 0; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelLinkLabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink > :is(.icon, i[class^='icon-']) {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    margin: 0;
+    font-size: 20px;
+    line-height: 20px;
+    color: var(--fluent-text-secondary);
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel.active > .SidebarLink {
+    background: linear-gradient(100deg, rgba(var(--fp-accent-rgb), 0.16), rgba(var(--fp-accent-rgb), 0.06)) !important;
+    box-shadow: none !important;
+}
+/* Replace the stock full-height slab with one inset Fluent selection marker. */
+html[data-mm-fluent] #SidebarContainer .SidebarChannel.active > .SidebarLink::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 3px;
+    height: 18px;
+    border: 0;
+    border-radius: 3px;
+    background: var(--fp-accent);
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink > :is(.badge, .unreadMentions) {
+    position: static;
+    flex: 0 0 auto;
+    min-width: 20px;
+    height: 18px;
+    padding: 0 5px;
+    margin: 0;
+    border-radius: 9px;
+    font: 600 11px/18px var(--fluent-font);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink .SidebarMenu { right: 4px; }
+html[data-mm-fluent] #SidebarContainer .SidebarMenu_menuButton { width: 28px; height: 28px; border-radius: 5px; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader { padding-inline: 20px 12px; height: 36px; margin-top: 12px; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader_groupButton { height: 36px; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader_groupButton .icon { font-size: 16px; width: 16px; margin: 0; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader_text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-mm-fluent] #SidebarContainer .SidebarChannelNavigator { padding: 6px 12px; margin: 0; gap: 6px; }
+html[data-mm-fluent] #SidebarContainer :is(.SidebarChannelNavigator_jumpToButton, .SidebarFilters_filterButton) {
+    height: 32px;
+    border: 1px solid var(--fluent-stroke-subtle);
+    border-radius: 6px;
+    background: var(--fluent-fill-subtle);
+    color: var(--fluent-text-secondary);
+    font: 400 13px/20px var(--fluent-font);
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannelNavigator_jumpToButton { min-width: 0; }
+html[data-mm-fluent] #SidebarContainer .SidebarFilters_filterButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 32px;
+    width: 32px;
+    padding: 0;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarFilters_filterButton > .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    font-size: 20px;
+    font-style: normal;
+    line-height: 20px;
+}
+html[data-mm-fluent] #SidebarContainer .FluentNavigation { padding: 4px 8px 8px; }
+html[data-mm-fluent] #SidebarContainer .FluentNavigation button { gap: 10px; border-radius: 10px; }
+html[data-mm-fluent] #SidebarContainer .FluentNavigation .icon { display: inline-flex; align-items: center; justify-content: center; height: 20px; font-size: 20px; line-height: 20px; font-style: normal; }
+html[data-mm-fluent] #SidebarContainer .FluentNavigation button[aria-current] { position: relative; box-shadow: none; background: rgba(var(--fp-accent-rgb), 0.1); }
+html[data-mm-fluent] #SidebarContainer .FluentNavigation button[aria-current]::before { content: ''; position: absolute; left: 0; top: 9px; width: 3px; height: 18px; border-radius: 3px; background: var(--fp-accent); }
+html[data-mm-fluent] #SidebarContainer .mm-fluent-hover { box-shadow: none; border-radius: 10px; }
+html[data-mm-fluent][data-mm-fluent-motion='on'] #SidebarContainer .mm-fluent-hover[data-tracking] {
+    transition: transform 120ms var(--fluent-ease), opacity 100ms ease-out;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannel .SidebarLink:focus-within .SidebarMenu { visibility: visible; opacity: 1; pointer-events: auto; }

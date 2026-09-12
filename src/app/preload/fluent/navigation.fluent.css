@@ -1,0 +1,68 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+html[data-mm-fluent-navigation] #SidebarContainer :is(.SidebarGlobalThreads, .SidebarDrafts) { display: none !important; }
+html[data-mm-fluent-navigation] .FluentNavigation {
+    display: grid;
+    gap: 2px;
+    padding: 4px 10px 12px;
+    flex-shrink: 0;
+}
+html[data-mm-fluent-navigation] .FluentNavigation button {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 36px;
+    padding: 0 12px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--fluent-text-secondary);
+    text-align: start;
+    font: 400 14px/20px var(--fluent-font);
+}
+html[data-mm-fluent-navigation] .FluentNavigation button:hover { background: var(--fluent-fill-hover); color: var(--fp-ink); }
+html[data-mm-fluent-navigation] .FluentNavigation button[aria-current] { background: var(--fluent-fill-selected); color: var(--fp-ink); box-shadow: inset 3px 0 var(--fp-accent); }
+html[data-mm-fluent-navigation] .FluentNavigation button:disabled { opacity: 0.4; }
+html[data-mm-fluent-navigation] .FluentNavigation button:focus-visible { outline: 2px solid var(--fp-accent); outline-offset: -2px; }
+html[data-mm-fluent-navigation][data-mm-fluent-motion='on'] .FluentNavigation button { transition: background-color 160ms ease, color 160ms ease, box-shadow 160ms ease; }
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent-navigation] .FluentNavigation button { transition: none !important; }
+}
+html[data-mm-fluent-navigation] .FluentNavigation .icon { font-size: 20px; width: 20px; flex-shrink: 0; }
+html[data-mm-fluent-navigation] .FluentNavigation__label { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-mm-fluent-navigation] .FluentNavigation__count { min-width: 22px; padding: 0 6px; border-radius: 9px; background: var(--fluent-fill-selected); font: 600 11px/18px var(--fluent-font); text-align: center; font-variant-numeric: tabular-nums; }
+html[data-mm-fluent-navigation] #SidebarContainer .SidebarChannelGroupHeader_text { font: 600 11px/18px var(--fluent-font); text-transform: none; letter-spacing: 0; color: var(--fluent-text-tertiary); }
+html[data-mm-fluent-navigation] #SidebarContainer .SidebarChannel.active > .SidebarLink { background: var(--fluent-fill-selected) !important; color: var(--fp-ink) !important; box-shadow: inset 3px 0 var(--fp-accent); }
+/* Keep original buttons, labels, tab order and plugin actions. Expand the title
+ * while the description remains available in the stock channel info panel. */
+html[data-mm-fluent-navigation] #channel-header .channel-header__title { gap: 12px; }
+html[data-mm-fluent-navigation] #channel-header .channel-header__top { flex: 1; min-width: 0; }
+html[data-mm-fluent-navigation] #channel-header:has(#channel-info-btn) #channelHeaderDescription { display: none; }
+html[data-mm-fluent-navigation] #channel-header .channel-header__icons { margin-left: auto; }
+html[data-mm-fluent-navigation] #channel-header :is(#channelHeaderDropdownButton, #channelHeaderTitle) { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-mm-fluent-navigation] #channel-header #channelHeaderTitle { font-size: 17px !important; font-weight: 600 !important; }
+html[data-mm-fluent-navigation] #channel-header .flex-parent > .flex-child:first-child { flex: 1; min-width: 0; }
+html[data-mm-fluent-navigation] #channel-header :is(#member_rhs, #channelHeaderFilesButton, #channel-info-btn) { border-radius: 7px; height: 32px; min-width: 32px; }
+/* Header glyphs must not inherit the small counter font or sit on its baseline. */
+html[data-mm-fluent-navigation] #channel-header .channel-header__icons { display: flex; align-items: center; gap: 4px; }
+html[data-mm-fluent-navigation] #channel-header .channel-header__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    gap: 6px;
+    margin-block: 0;
+    vertical-align: middle;
+}
+html[data-mm-fluent-navigation] #channel-header .channel-header__icon :is(.icon, i[class*='icon-']) {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    flex: 0 0 20px;
+    font-size: 20px;
+    line-height: 20px;
+}

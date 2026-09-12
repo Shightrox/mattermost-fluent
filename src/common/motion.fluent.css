@@ -1,0 +1,87 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Animate feedback and transient surfaces, never the virtualized message feed.
+ * Opacity-only text entrances preserve the final glyph rasterization and layout. */
+html [data-fluent-liquid] {
+    position: fixed;
+    z-index: 2147483000;
+    overflow: hidden;
+    pointer-events: none !important;
+    contain: strict;
+}
+html [data-fluent-liquid][hidden] { display: none !important; }
+html [data-fluent-liquid] > div { position: absolute; pointer-events: none !important; }
+.fluent-liquid-glow {
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(var(--fp-accent-rgb), 0.16), rgba(var(--fp-ink-rgb), 0.035) 45%, transparent 70%);
+}
+.fluent-liquid-ripple { border-radius: 50%; opacity: 0; background: radial-gradient(circle, var(--fp-accent), transparent 70%); }
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='on'] :is(
+    button, .btn, .SidebarLink, .SettingsModal__category, .TabBar > li > a,
+    .MenuItem, .menu_menuStyled [role='menuitem'], .dropdown-menu > li > a, .Reaction, .form-control,
+    .Input_container, .AdvancedTextEditor__body, .RadioSetting__radio
+) {
+    transition: background-color var(--fluent-motion-feedback) ease-out,
+        color var(--fluent-motion-feedback) ease-out,
+        border-color var(--fluent-motion-feedback) ease-out,
+        box-shadow var(--fluent-motion-feedback) ease-out;
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(.SidebarMenu, .post__hover-actions) {
+    transition: opacity var(--fluent-motion-feedback) ease-out;
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] .mm-fluent-hover {
+    background: linear-gradient(110deg, rgba(var(--fp-ink-rgb), 0.085), rgba(var(--fp-ink-rgb), 0.035));
+    transition: opacity var(--fluent-motion-feedback) ease-out;
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] .mm-fluent-hover[data-tracking] {
+    transition: transform 240ms var(--fluent-ease), opacity var(--fluent-motion-feedback) ease-out;
+}
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='on'] :is(
+    .Menu__content, .modal-content, .suggestion-list, .emoji-picker,
+    .Modal_content, .ConfigureServer__card, .WelcomeScreen__content
+) {
+    animation: fluent-reveal var(--fluent-motion-enter) var(--fluent-ease);
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(#sidebar-right, .SidebarRight) {
+    animation: fluent-pane-in var(--fluent-motion-pane) var(--fluent-ease);
+}
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='on'] :is(
+    .modal-title, .Modal_header h1, .Modal_header h2, .WelcomeScreenSlide__title,
+    .WelcomeScreenSlide__description, .ConfigureServer__message-title,
+    .ConfigureServer__message-subtitle, .SettingsModal__content
+) {
+    animation: fluent-text-in var(--fluent-motion-pane) ease-out;
+}
+@keyframes fluent-reveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+@keyframes fluent-text-in {
+    from { opacity: 0.25; }
+    to { opacity: 1; }
+}
+/* Opt-out also stops stock transitions, including already-running animations. */
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='on'] :is(.SettingsModal__content, .FluentWorkspaceRail__servers, .Menu__content, .suggestion-list) {
+    scroll-behavior: smooth;
+}
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='off'] *,
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='off'] *::before,
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-motion='off'] *::after {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+}
+@media (prefers-reduced-motion: reduce) {
+    html:is([data-mm-fluent], [data-mm-fluent-shell]) *,
+    html:is([data-mm-fluent], [data-mm-fluent-shell]) *::before,
+    html:is([data-mm-fluent], [data-mm-fluent-shell]) *::after {
+        animation-duration: 0s !important;
+        animation-delay: 0s !important;
+        transition-duration: 0s !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
+}

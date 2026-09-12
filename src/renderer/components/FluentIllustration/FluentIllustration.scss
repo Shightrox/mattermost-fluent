@@ -1,0 +1,45 @@
+.FluentIllustration {
+    position: relative;
+    width: 320px;
+    max-width: 100%;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    &__window {
+        position: relative;
+        z-index: 1;
+        border: 1px solid var(--fluent-stroke-control);
+        border-radius: 12px;
+        background: var(--fp-surface);
+        box-shadow: 0 16px 32px rgb(0 0 0 / 14%);
+        overflow: hidden;
+    }
+    &__bar {
+        height: 24px;
+        display: flex;
+        gap: 4px;
+        align-items: center;
+        padding: 0 10px;
+        border-bottom: 1px solid var(--fluent-stroke-subtle);
+        span { width: 4px; height: 4px; border-radius: 50%; background: var(--fluent-text-tertiary); }
+    }
+    &__layout { display: flex; height: 136px; }
+    &__nav {
+        width: 72px;
+        padding: 12px 8px;
+        background: var(--fluent-fill-subtle);
+        b, i { display: block; height: 5px; border-radius: 3px; margin-bottom: 12px; background: var(--fluent-stroke-control); }
+        b { width: 70%; background: var(--fluent-text-secondary); }
+        i:nth-child(3) { height: 14px; margin: -4px -3px 8px; background: rgba(var(--fp-accent-rgb), 0.15); border-left: 2px solid var(--fp-accent); }
+    }
+    &__conversation { flex: 1; padding: 18px 12px 10px; }
+    &__message {
+        display: flex; gap: 8px; margin-bottom: 14px;
+        b { width: 20px; height: 20px; border-radius: 50%; background: rgba(var(--fp-accent-rgb), 0.4); }
+        span { flex: 1; padding-top: 2px; }
+        i { display: block; height: 4px; border-radius: 2px; margin-bottom: 5px; background: var(--fluent-stroke-control); }
+        i:first-child { width: 45%; background: var(--fluent-text-secondary); }
+        &:nth-child(2) b { background: var(--fluent-stroke-control); }
+    }
+    &__input { display: flex; height: 24px; align-items: center; justify-content: flex-end; padding: 0 8px; border-radius: 5px; background: var(--fluent-control); border: 1px solid var(--fluent-stroke-control); border-bottom-color: var(--fp-accent); color: var(--fp-accent); font-size: 16px; }
+    &__accent { position: absolute; width: 180px; height: 100px; right: 0; bottom: 0; border-radius: 50%; background: rgba(var(--fp-accent-rgb), 0.15); filter: blur(24px); }
+}

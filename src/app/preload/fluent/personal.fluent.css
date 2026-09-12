@@ -1,0 +1,41 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+html[data-mm-fluent] .FluentPersonal { margin: 0 12px 10px; flex-shrink: 0; color: var(--fluent-text-secondary); font: 400 12px/18px var(--fluent-font); }
+html[data-mm-fluent] .FluentPersonal__row { display: flex; align-items: center; gap: 4px; min-width: 0; }
+html[data-mm-fluent] .FluentPersonal :is(select, input:not([type=checkbox]):not([type=range])) { min-width: 0; width: 100%; height: 32px; padding: 4px 8px; border: 1px solid var(--fluent-stroke-subtle); border-radius: 8px; background: var(--fluent-control); color: var(--fp-ink); font: inherit; }
+html[data-mm-fluent] .FluentPersonal :is(button, a), html[data-mm-fluent] .FluentFocus { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 32px; min-width: 32px; padding: 0 6px; border: 0; border-radius: 8px; background: transparent; color: var(--fluent-text-secondary); flex-shrink: 0; }
+html[data-mm-fluent] .FluentPersonal a { flex: 1; min-width: 0; justify-content: flex-start; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+html[data-mm-fluent] .FluentPersonal a[aria-current], html[data-mm-fluent] .FluentFocus[aria-pressed=true] { background: var(--fluent-fill-selected); color: var(--fp-accent); }
+html[data-mm-fluent] .FluentPersonal :is(button, a):hover, html[data-mm-fluent] .FluentFocus:hover { background: var(--fluent-fill-hover); color: var(--fp-ink); }
+html[data-mm-fluent] .FluentPersonal :is(button, input, select, a, summary):focus-visible, html[data-mm-fluent] .FluentFocus:focus-visible { outline: 2px solid var(--fp-accent); outline-offset: 1px; }
+html[data-mm-fluent] .FluentPersonal .icon, html[data-mm-fluent] .FluentFocus .icon { display: inline-flex; width: 20px; height: 20px; font-size: 20px; line-height: 20px; }
+html[data-mm-fluent] .FluentPersonal details { margin-top: 4px; }
+html[data-mm-fluent] .FluentPersonal details:not([open]) { display: none; }
+html[data-mm-fluent] .FluentPersonal details[open] { max-height: 280px; overflow: auto; padding: 10px; border-radius: 10px; background: var(--fluent-control); border: 1px solid var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .FluentPersonal form { display: flex; gap: 4px; margin-block: 8px; }
+html[data-mm-fluent] .FluentPersonal label { display: flex; flex-wrap: wrap; gap: 6px; margin-block: 10px; font: inherit; }
+html[data-mm-fluent] .FluentPersonal input[type=range] { width: 100%; accent-color: var(--fp-accent); }
+html[data-mm-fluent] .FluentPersonal nav { max-height: 180px; overflow: auto; margin-block: 4px; }
+html[data-mm-fluent] .FluentPersonal p { margin: 8px; color: var(--fluent-text-tertiary); }
+html[data-mm-fluent] #channel-header .FluentFocus { align-self: center; order: -1; margin-right: 8px; }
+html[data-mm-fluent] #SidebarContainer .SidebarLink > .icon { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 20px; font-size: 20px; line-height: 20px; }
+html[data-mm-fluent][data-fluent-density-compact] #SidebarContainer .SidebarChannel .SidebarLink { min-height: 30px; height: 30px; }
+/* Focus changes columns once. Never tween dimensions of a virtualized feed. */
+html[data-mm-fluent][data-fluent-focus] .main-wrapper { grid-template-columns: minmax(0, 1fr) !important; grid-template-areas: 'center' !important; }
+html[data-mm-fluent][data-fluent-focus] #SidebarContainer { display: none !important; }
+html[data-mm-fluent][data-fluent-focus] #channel_view { margin-left: 0 !important; }
+html[data-mm-fluent][data-fluent-focus][data-mm-fluent-context-narrow] #sidebar-right { left: 0 !important; }
+@media (min-width: 1101px) {
+    html[data-mm-fluent][data-fluent-focus][data-mm-fluent-context] .main-wrapper { grid-template-columns: minmax(0, 1fr) minmax(360px, 44%) !important; grid-template-areas: 'center rhs' !important; }
+    html[data-mm-fluent][data-fluent-focus][data-mm-fluent-context] .sidebar--right--width-holder { display: none !important; }
+    html[data-mm-fluent][data-fluent-focus][data-mm-fluent-context] #sidebar-right { position: relative !important; grid-area: rhs !important; inset: auto !important; width: 100% !important; max-width: none !important; height: 100%; }
+    html[data-mm-fluent][data-fluent-focus][data-mm-fluent-context] #channel_view { margin-right: 0 !important; }
+}
+/* A floating command surface visually belongs to the single desktop title bar. */
+html[data-mm-fluent-compact] #global-header { inset: 8px 12px auto !important; width: calc(100% - 24px); border: 1px solid var(--fluent-stroke-control) !important; border-radius: 12px; background: var(--fp-surface) !important; }
+html[data-mm-fluent][data-mm-fluent-motion=on] .FluentPersonal details[open] { animation: fluent-text-in 180ms ease-out; }
+html[data-mm-fluent][data-mm-fluent-motion=on] :is(.menu_menuStyled .MuiPopover-paper, #emojiGifPicker) { transform-origin: top right; animation: fluent-reveal 180ms var(--fluent-ease); }
+html[data-mm-fluent] :is(.error-message, .post--failed .post-message, .connection-error) { color: var(--error-text); }
+html[data-mm-fluent] :is(.no-results__title, .empty-state__title) { font: 600 18px/26px var(--fluent-font); }
+html[data-mm-fluent] :is(.no-results__subtitle, .empty-state__description) { color: var(--fluent-text-secondary); font: 400 14px/22px var(--fluent-font); }
+html[data-mm-fluent] :is(.loading-screen, .loading-screen .loading-screen__content) { background: transparent; color: var(--fluent-text-secondary); }

@@ -1,0 +1,204 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Composition for recognized Channels markup. Preserve webapp layout ownership:
+ * no reparenting, fixed editor heights or changes to virtualized row heights. */
+html[data-mm-fluent-surface='channels'] .main-wrapper {
+    border: 0 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] #SidebarContainer {
+    background: var(--fp-nav-panel) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+html[data-mm-fluent] #SidebarContainer :is(#sidebar-left, .SidebarHeader, .SidebarChannelNavigator, .sidebarHeaderContainer, #lhsNavigator) {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarHeader {
+    padding-inline: 20px;
+}
+html[data-mm-fluent] #SidebarContainer :is(.SidebarChannelNavigator_search, .SidebarChannelNavigator_searchButton) {
+    border: 1px solid var(--fluent-stroke-subtle) !important;
+    background: var(--fluent-fill-subtle) !important;
+    border-radius: 6px;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarLink {
+    color: var(--fluent-text-secondary) !important;
+    font: 400 14px/20px var(--fluent-font);
+}
+html[data-mm-fluent] #SidebarContainer .SidebarLink:is(.unread-title, .active) {
+    color: var(--fp-ink) !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarLink.unread-title { font-weight: 600; }
+html[data-mm-fluent] #SidebarContainer .SidebarLink.active {
+    background: var(--fluent-fill-selected) !important;
+    box-shadow: inset 3px 0 var(--fp-accent) !important;
+}
+html[data-mm-fluent] #SidebarContainer :is(.SidebarGlobalThreads, .SidebarDrafts) .SidebarLink {
+    margin-inline: 8px;
+    width: calc(100% - 16px);
+    padding-inline: 12px;
+    border-radius: 6px;
+}
+html[data-mm-fluent] #SidebarContainer :is(.SidebarCategoryHeader_name, .SidebarHeading) {
+    color: var(--fluent-text-tertiary) !important;
+    font: 600 11px/16px var(--fluent-font);
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+}
+/* Current webapp category headers. Keep the original collapse/menu controls
+ * and let the sidebar material show through without another opaque strip. */
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader {
+    background: transparent !important;
+    border: 0 !important;
+    padding-inline: 12px;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader_groupButton {
+    min-width: 0;
+    gap: 6px;
+    background: transparent !important;
+    color: var(--fluent-text-secondary) !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarChannelGroupHeader_text {
+    font: 600 12px/20px var(--fluent-font) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    color: var(--fluent-text-secondary) !important;
+}
+html[data-mm-fluent] .nav-pills__unread-indicator {
+    border: 1px solid var(--fluent-stroke-control) !important;
+    border-radius: 8px !important;
+    background: var(--fp-nav) !important;
+    color: var(--fp-ink) !important;
+    box-shadow: 0 3px 12px rgb(0 0 0 / 12%);
+    font: 600 12px/16px var(--fluent-font);
+}
+/* The stock SVG explicitly inherits button ink, which is dark on our dark pill. */
+html[data-mm-fluent] .nav-pills__unread-indicator .icon__unread { color: var(--fp-ink) !important; }
+html[data-mm-fluent] .nav-pills__unread-indicator .icon__unread svg,
+html[data-mm-fluent] .nav-pills__unread-indicator .icon__unread svg path { fill: var(--fp-ink) !important; }
+/* A single conversation canvas. Its descendants do not repaint the material. */
+html[data-mm-fluent-surface='channels'] #app-content {
+    background: var(--fp-surface) !important;
+    border: 1px solid var(--fluent-stroke-subtle) !important;
+    border-radius: var(--fluent-radius-surface) 0 0 0 !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent-surface='channels'] #app-content :is(#post-list, #create_post, #post-create, #channel-header) {
+    background: transparent !important;
+}
+html[data-mm-fluent-surface='channels'] #app-content #channel-header {
+    border-bottom: 1px solid var(--fluent-stroke-subtle) !important;
+    padding-inline: 20px;
+}
+html[data-mm-fluent] .channel-header :is(.heading, .channel-header__title) {
+    font: 600 16px/24px var(--fluent-font) !important;
+    letter-spacing: -0.2px !important;
+}
+html[data-mm-fluent] :is(.channel-header__description, .post__time) {
+    color: var(--fluent-text-tertiary) !important;
+}
+html[data-mm-fluent] .post__header .user-popover {
+    color: var(--fp-ink) !important;
+    font-weight: 600 !important;
+}
+html[data-mm-fluent] .post-message__text {
+    color: var(--fp-ink) !important;
+    font: 400 var(--fluent-message-size)/var(--fluent-message-line) var(--fluent-font);
+}
+html[data-mm-fluent] :is(.post__body, .post-message__text) p { line-height: var(--fluent-message-line); }
+html[data-mm-fluent] :is(.post__time, .post__header .col__reply) { font-size: 12px; }
+html[data-mm-fluent] .post .post__content { min-width: 0; }
+html[data-mm-fluent] .post:hover { background-color: var(--fluent-fill-subtle); }
+html[data-mm-fluent] :is(.Reaction, .post-reaction, .post-reaction--current-user) {
+    border-radius: 6px;
+    font: 400 12px/18px var(--fluent-font);
+}
+html[data-mm-fluent] :is(.Reaction--selected, .post-reaction--current-user) {
+    border-color: rgba(var(--fp-accent-rgb), 0.4) !important;
+    background: rgba(var(--fp-accent-rgb), 0.1) !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor__body {
+    min-width: 0;
+    background: var(--fluent-control) !important;
+    border: 1px solid var(--fluent-stroke-control) !important;
+    border-bottom-color: rgba(var(--fp-ink-rgb), 0.3) !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 5px rgb(0 0 0 / 4%) !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor__body:focus-within {
+    border-color: var(--fluent-stroke-control) !important;
+    border-bottom-color: var(--fp-accent) !important;
+    box-shadow: inset 0 -1px var(--fp-accent) !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor :is(.AdvancedTextEditor__cell, .AdvancedTextEditor__footer, .AdvancedTextEditor__body textarea) {
+    background: transparent !important;
+}
+/* Stock single-line minimum is 46px, but 22px prose plus 25px padding
+ * needs 47px. Allow one pixel of rounding headroom at fractional Windows DPI. */
+html[data-mm-fluent] .AdvancedTextEditor textarea { min-height: max(calc(1lh + 26px), var(--fluent-editor-height, 0px)) !important; }
+html[data-mm-fluent] .AdvancedTextEditor :is(.AutoHeight, .AutoHeight > div, .custom-textarea[id$='-reference']) {
+    font: 400 var(--fluent-message-size)/var(--fluent-message-line) var(--fluent-font) !important;
+    letter-spacing: normal !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor textarea::placeholder {
+    color: var(--fluent-text-tertiary) !important;
+    opacity: 1;
+}
+html[data-mm-fluent] .AdvancedTextEditor__body :is(button, .btn) {
+    border-radius: 6px;
+}
+html[data-mm-fluent] :is(#rhsContainer, .sidebar--right, .SidebarRight) {
+    background: var(--fp-surface) !important;
+    border-color: var(--fluent-stroke-subtle) !important;
+}
+html[data-mm-fluent] :is(.sidebar--right__header, .sidebar-right__header) {
+    background: transparent !important;
+    font: 600 15px/22px var(--fluent-font);
+}
+html[data-mm-fluent] .app-bar {
+    background: transparent !important;
+    border: 0 !important;
+}
+html[data-mm-fluent] :is(.Menu__content, .modal-content, .suggestion-list) {
+    background: var(--fp-panel) !important;
+    border: 1px solid var(--fluent-stroke-control) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--fp-shadow) !important;
+    backdrop-filter: blur(24px);
+}
+html[data-mm-fluent] :is(.modal-header, .modal-footer) { border-color: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] :is(.modal-title, .modal-header h4) {
+    font: 600 20px/28px var(--fluent-font);
+    color: var(--fp-ink);
+}
+html[data-mm-fluent] :is(.form-control, .Input_container) {
+    border-radius: 6px;
+    border-color: var(--fluent-stroke-control);
+    background: var(--fluent-control);
+    color: var(--fp-ink);
+}
+html[data-mm-fluent] :is(button, a, input, textarea):focus-visible {
+    outline: 2px solid var(--fp-accent);
+    outline-offset: 2px;
+}
+/* The editor body already owns the focus indication. */
+html[data-mm-fluent] .AdvancedTextEditor textarea:focus-visible { outline: none; }
+html[data-mm-fluent][data-mm-fluent-motion='on'] .AdvancedTextEditor__body {
+    transition: border-color 120ms ease-out, box-shadow 120ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent] :is(.AdvancedTextEditor__body, .sidebar--right, .SidebarRight) {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+@media (max-width: 900px) {
+    html[data-mm-fluent-surface='channels'] #app-content #channel-header { padding-inline: 12px; }
+}

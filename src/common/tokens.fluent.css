@@ -1,0 +1,27 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Shared geometry and hierarchy, independent of the selected color scheme. */
+html:is([data-mm-fluent], [data-mm-fluent-shell]) {
+    --fluent-message-size: 15px;
+    --fluent-message-line: 22px;
+    --fluent-font: 'Segoe UI', system-ui, sans-serif;
+    --fluent-radius-control: 6px;
+    --fluent-radius-surface: 12px;
+    --fluent-text-secondary: rgba(var(--fp-ink-rgb), 0.68);
+    --fluent-text-tertiary: rgba(var(--fp-ink-rgb), 0.64);
+    --fluent-fill-subtle: rgba(var(--fp-ink-rgb), 0.045);
+    --fluent-fill-hover: rgba(var(--fp-ink-rgb), 0.075);
+    --fluent-fill-selected: rgba(var(--fp-ink-rgb), 0.09);
+    --fluent-stroke-subtle: rgba(var(--fp-ink-rgb), 0.065);
+    --fluent-stroke-control: rgba(var(--fp-ink-rgb), 0.14);
+    --fluent-control: color-mix(in srgb, var(--fp-surface) 96%, var(--fp-ink));
+    --fluent-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --fluent-motion-feedback: 160ms;
+    --fluent-motion-enter: 240ms;
+    --fluent-motion-pane: 300ms;
+}
+
+html:is([data-mm-fluent], [data-mm-fluent-shell])[data-mm-fluent-text-size='large'] {
+    --fluent-message-size: 17px;
+    --fluent-message-line: 26px;
+}

@@ -1,0 +1,25 @@
+<!-- Synthetic regression fixture using upstream AdvancedTextEditor nesting. -->
+<style>
+.editor-fixture {position:fixed;inset:70px 20px 20px;z-index:100;background:var(--center-channel-bg);color:var(--center-channel-color);padding:28px;overflow:auto}
+.editor-fixture h2 {font:600 20px 'Segoe UI';margin:0 0 24px}
+.editor-fixture .editor-columns {display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:24px}
+.editor-fixture section {min-width:0}
+.editor-fixture p {color:rgba(var(--center-channel-color-rgb),.55)}
+.editor-fixture .AdvancedTextEditor {position:relative;display:flex;width:100%;align-items:end;padding:0 24px;gap:12px}
+.editor-fixture .AdvancedTextEditor__body {position:relative;min-width:0;flex:1;margin:0;padding:0;border:2px solid #556677;border-radius:4px;background:var(--center-channel-bg)}
+.editor-fixture .AdvancedTextEditor__cell {position:relative;display:flex;flex-direction:column}
+.editor-fixture .custom-textarea {display:block;box-sizing:border-box;width:100%;padding:16px;border:0;outline:0;resize:none;background:transparent;color:inherit}
+.editor-fixture .editor-actions {display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:8px 12px}
+.editor-fixture button {height:32px;min-width:32px;border:0;border-radius:6px;color:var(--center-channel-color);background:transparent}
+.editor-fixture button:last-child {background:var(--button-bg);color:var(--button-color)}
+.editor-fixture .editor-actions span {flex:1}
+</style>
+<div class="editor-fixture">
+  <h2>Composer layout · synthetic regression fixture</h2>
+  <p class="post-message__text">Проверка шрифта: сообщение на русском. English text, 0123456789.</p>
+  <div class="editor-columns">
+    <section id="create_post"><p>Channel · multiline input</p><form><div class="AdvancedTextEditor"><fieldset class="AdvancedTextEditor__body"><div class="AdvancedTextEditor__cell"><textarea rows="3" class="custom-textarea">First line of an unsent draft.
+Second line: formatting and upload controls remain below the text.</textarea><div class="editor-actions"><span></span><button type="button" aria-label="Formatting">Aa</button><button type="button" aria-label="Attachment">＋</button><button type="button" aria-label="Emoji">☺</button><button type="button" aria-label="Send">➤</button></div></div></fieldset></div></form></section>
+    <section class="sidebar--right"><p>Thread · narrow input</p><form><div class="AdvancedTextEditor"><fieldset class="AdvancedTextEditor__body"><div class="AdvancedTextEditor__cell"><textarea rows="3" class="custom-textarea" placeholder="Reply in this thread…"></textarea><div class="editor-actions"><button type="button" aria-label="Formatting">Aa</button><button type="button" aria-label="Attachment">＋</button><button type="button" aria-label="Emoji">☺</button><button type="button" aria-label="Send">➤</button></div></div></fieldset></div></form></section>
+  </div>
+</div>

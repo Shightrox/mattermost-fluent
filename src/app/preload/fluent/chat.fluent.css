@@ -1,0 +1,337 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Conversation surfaces: keep message order, author controls and the virtual
+ * list's measured heights. Search snippets and plugin posts stay untouched. */
+html[data-mm-fluent] {
+    --fluent-chat-canvas: var(--fp-canvas, #191c20);
+    --fluent-chat-bubble: rgb(255 255 255 / 5%);
+    --fluent-chat-own: rgba(var(--fp-accent-rgb), 0.15);
+    --fluent-chat-edge: rgb(255 255 255 / 4%);
+    --fluent-chat-highlight: rgb(255 255 255 / 3%);
+}
+html[data-mm-fluent-theme='light'] {
+    --fluent-chat-canvas: var(--fp-canvas, #f1f3f7);
+    --fluent-chat-bubble: rgb(255 255 255 / 76%);
+    --fluent-chat-own: color-mix(in srgb, var(--fp-accent) 11%, rgb(255 255 255 / 90%));
+    --fluent-chat-edge: rgb(32 38 49 / 6%);
+    --fluent-chat-highlight: rgb(255 255 255 / 70%);
+}
+@media (prefers-reduced-transparency: reduce) {
+    html[data-mm-fluent] {
+        --fluent-chat-bubble: color-mix(in srgb, var(--fp-ink) 4%, var(--fluent-chat-canvas));
+        --fluent-chat-own: color-mix(in srgb, var(--fp-accent) 6%, var(--fluent-chat-canvas));
+    }
+    html[data-mm-fluent-theme='light'] { --fluent-chat-bubble: #fcfcfd; }
+}
+html[data-mm-fluent] #channel_view {
+    background: radial-gradient(ellipse at 95% 0%, rgba(var(--fp-accent-rgb), 0.12), transparent 55%), radial-gradient(ellipse at 0% 100%, rgba(var(--fp-accent-rgb), 0.045), transparent 60%), var(--fluent-chat-fill, var(--fluent-chat-canvas)) !important;
+}
+/* The native window supplies Mica/Acrylic once, behind the transparent view.
+ * No backdrop-filter on scrolling content or individual message bubbles. */
+html[data-mm-fluent][data-mm-fluent-material='mica'],
+html[data-mm-fluent][data-mm-fluent-material='acrylic'] {
+    --fluent-chat-fill: color-mix(in srgb, var(--fluent-chat-canvas) var(--fluent-chat-opacity, 75%), transparent);
+}
+@media (prefers-reduced-transparency: reduce) {
+    html[data-mm-fluent][data-mm-fluent-material] { --fluent-chat-fill: var(--fluent-chat-canvas); }
+}
+html[data-mm-fluent] #channel_view #app-content { background: transparent !important; }
+html[data-mm-fluent] #channel_view #app-content #channel-header {
+    margin: 10px 16px 6px;
+    width: calc(100% - 32px);
+    padding-inline: 16px;
+    border: 1px solid var(--fluent-chat-edge) !important;
+    border-radius: 14px !important;
+    background: color-mix(in srgb, var(--fp-surface) 80%, transparent) !important;
+    box-shadow: inset 0 1px var(--fluent-chat-highlight), 0 4px 16px rgb(0 0 0 / 4%);
+}
+html[data-mm-fluent] #channel_view :is(#post-list, .post-list-holder-by-time, .post-list__table, .post-list__content, #postListScrollContainer, #post-create) { background: transparent !important; }
+/* Width changes stay inside measured rows; never animate list geometry. */
+html[data-mm-fluent] #channel_view [data-testid='postView'] { max-width: 940px; margin-inline: auto; }
+html[data-mm-fluent] #channel_view #create_post { max-width: 860px; margin-inline: auto; }
+html[data-mm-fluent] #sidebar-right:has(#reply_textbox) #rhsContainer { background: var(--fluent-chat-canvas) !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']):not(.post--system, .system-message, .system--message) .post__content > .post__img + div {
+    width: fit-content;
+    max-width: min(780px, 100%);
+    padding: 9px 14px;
+    border: 1px solid var(--fluent-chat-edge);
+    border-radius: 5px 16px 16px;
+    background: var(--fluent-chat-bubble);
+    box-shadow: inset 0 1px var(--fluent-chat-highlight);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']).current--user .post__content > .post__img + div {
+    background: var(--fluent-chat-own);
+}
+/* Keep native posts and their controls in DOM order. Flex only changes the
+ * conversation's visual lanes; the virtualizer still measures each whole row. */
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__content {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+    padding-inline: 16px;
+}
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__img {
+    flex: 0 0 32px;
+    width: 32px;
+    margin: 4px 0 0;
+    padding: 0;
+}
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__content > .post__img + div {
+    min-width: 0;
+    max-width: min(720px, 78%);
+}
+html[data-mm-fluent] #channel_view [data-testid='postView'].current--user:not(.post--system, .system-message, .system--message) .post__content { flex-direction: row-reverse; }
+html[data-mm-fluent] #channel_view [data-testid='postView'].current--user .post__content > .post__img + div { border-radius: 16px 5px 16px 16px; }
+html[data-mm-fluent] #channel_view [data-testid='postView'].same--user .post__content > .post__img + div { border-start-start-radius: 5px; }
+html[data-mm-fluent] #channel_view [data-testid='postView'].same--user.current--user .post__content > .post__img + div { border-radius: 16px 5px 16px 16px; }
+html[data-mm-fluent] #channel_view [data-testid='postView']:hover { background: transparent !important; }
+/* Keep native same-author grouping local to each measured row. */
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post--system .post__content > .post__img + div {
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    box-shadow: none;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post--system .post-message__text { font-size: 13px; color: var(--fluent-text-secondary) !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .Separator .separator__hr { border-color: transparent; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .Separator .separator__text {
+    padding: 4px 12px;
+    border: 1px solid var(--fluent-chat-edge);
+    border-radius: 12px;
+    background: color-mix(in srgb, var(--fluent-chat-canvas) 92%, var(--fp-ink)) !important;
+    color: var(--fluent-text-secondary);
+    font: 600 11px/18px var(--fluent-font);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .Separator .separator__text > span {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent !important;
+    font: inherit;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .Separator.NewMessagesSeparator .separator__text { color: var(--fp-accent); }
+/* Spacing belongs inside the measured row, never a collapsing outer margin. */
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']) .post__content { padding-bottom: 6px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']).same--user .post__content > .post__img + div { padding-block: 8px; }
+/* The virtual list must measure final message geometry, not an interpolated
+ * AutoHeight value as rows mount or attachments finish loading. */
+html[data-mm-fluent] :is(#postListScrollContainer, #threadViewerScrollContainer) .AutoHeight { transition: none !important; }
+/* Instant programmatic anchoring must not animate. Wheel/touch scrolling is
+ * handled separately by Chromium, without Fluent's JavaScript interpolator. */
+html[data-mm-fluent] :is(#postListScrollContainer, #threadViewerScrollContainer) { scroll-behavior: auto !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']) .post__header { margin-bottom: 4px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']) .post__time { font-size: 11px; font-variant-numeric: tabular-nums; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']) .post__body { overflow-wrap: anywhere; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) :is([data-testid='postView'], [data-testid='rhsPostView']) pre { max-width: 100%; overflow-x: auto; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .AdvancedTextEditor__body { border-radius: 16px !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .AdvancedTextEditor__body {
+    background: color-mix(in srgb, var(--fp-surface) 92%, var(--fp-ink)) !important;
+    border-color: var(--fluent-chat-edge) !important;
+    box-shadow: inset 0 1px var(--fluent-chat-highlight), 0 8px 28px rgb(0 0 0 / 12%) !important;
+}
+html[data-mm-fluent-theme='light'] :is(#channel_view, #sidebar-right) .AdvancedTextEditor__body { background: rgb(255 255 255 / 94%) !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .AdvancedTextEditor .SendMessageButton { border-radius: 10px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .AdvancedTextEditor__body:focus-within {
+    border-bottom-color: var(--fp-accent) !important;
+    box-shadow: inset 0 -1px var(--fp-accent), 0 8px 28px rgb(0 0 0 / 12%), 0 0 0 3px rgba(var(--fp-accent-rgb), 0.045) !important;
+}
+/* Keep large message surfaces out of repeated color rasterization while the
+ * pointer crosses the feed. Animated feedback lives on the small controls. */
+html[data-mm-fluent] #channel_view [data-testid='postView'] .post__content > .post__img + div { transition: none; }
+html[data-mm-fluent] #channel_view [data-testid='postView'] .post__content > .post__img + div:hover { border-color: var(--fluent-stroke-control); }
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent] #channel_view [data-testid='postView'] .post__content > .post__img + div { transition: none !important; }
+}
+@media (max-width: 900px) {
+    html[data-mm-fluent] #channel_view #app-content #channel-header { margin-inline: 8px; width: calc(100% - 16px); padding-inline: 12px; }
+    html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__content { padding-inline: 8px; }
+}
+html[data-mm-fluent] .AdvancedTextEditor [data-testid='formattingBarContainer'] { gap: 2px; }
+html[data-mm-fluent] .AdvancedTextEditor [data-testid='formatting-bar-separator'] { background: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .AdvancedTextEditor .SendMessageButton:disabled { color: var(--fluent-text-tertiary) !important; }
+html[data-mm-fluent] .AdvancedTextEditor .SendMessageButton:not(:disabled) { color: var(--button-color); }
+html[data-mm-fluent] .AdvancedTextEditor .HelpButton__link { color: var(--fluent-text-secondary); font-size: 11px; }
+
+/* Compact input without moving React-owned nodes or touching its preference. */
+html[data-mm-fluent] .mm-fluent-composer { container-type: inline-size; }
+html[data-mm-fluent] .mm-fluent-composer .mm-fluent-editor-cell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+}
+html[data-mm-fluent] .mm-fluent-composer .textarea-wrapper { grid-column: 1; min-width: 0; }
+html[data-mm-fluent] .mm-fluent-composer .mm-fluent-editor-actions {
+    position: static !important;
+    grid-column: 2;
+    padding: 8px;
+    height: auto;
+    margin: 0;
+    gap: 2px;
+}
+html[data-mm-fluent] .mm-fluent-formatting-slot { grid-column: 1 / -1; grid-row: 2; min-width: 0; }
+html[data-mm-fluent] .mm-fluent-composer[data-fluent-tools='closed'] .mm-fluent-formatting-slot { display: none; }
+html[data-mm-fluent] .mm-fluent-composer [data-testid='formattingBarContainer'] { padding-inline: 8px; width: 100%; border-top: 1px solid var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .mm-fluent-composer #toggleFormattingBarButton[aria-expanded='false'] > svg:last-child { transform: rotate(180deg); }
+@container (max-width: 480px) {
+    html[data-mm-fluent] .mm-fluent-composer .mm-fluent-editor-cell { grid-template-columns: minmax(0, 1fr); }
+    html[data-mm-fluent] .mm-fluent-composer .mm-fluent-editor-actions { grid-column: 1; grid-row: 2; justify-self: end; }
+    html[data-mm-fluent] .mm-fluent-composer .mm-fluent-formatting-slot { grid-row: 3; }
+}
+
+/* Prose and attachments share the bubble without another enclosing card. */
+/* Legacy/collapsed previews use file cards. Clear the native header floats:
+ * an empty message otherwise leaves this flex container at zero width beside
+ * those floats, with its minimum-width cards overflowing the bubble. */
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) [data-testid='fileAttachmentList'].post-image__columns {
+    clear: both;
+    width: 320px;
+    max-width: 100%;
+    min-width: 0;
+    margin-top: 8px;
+    gap: 8px;
+    flex-direction: column;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) [data-testid='fileAttachmentList'] > .post-image__column {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+}
+/* Give the native gallery a real preferred width inside fit-content bubbles.
+ * Tiles retain native preview actions and keyboard navigation. */
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery { width: 520px; max-width: 100%; margin-top: 8px; }
+html[data-mm-fluent] [data-fluent-gallery] .MediaGallery__rows_inner { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+html[data-mm-fluent] [data-fluent-gallery] .MediaGallery__row { display: contents; }
+html[data-mm-fluent] [data-fluent-gallery] .MediaGallery__tile { width: 100% !important; height: auto !important; min-width: 0; aspect-ratio: 4 / 3; }
+html[data-mm-fluent] [data-fluent-gallery] [data-fluent-gallery-wide] { grid-column: 1 / -1; aspect-ratio: 2 / 1; }
+html[data-mm-fluent] [data-fluent-gallery] .MediaGallery__tile > img { width: 100%; height: 100%; object-fit: cover; }
+html[data-mm-fluent] :is(#postListScrollContainer, #threadViewerScrollContainer) .MediaGallery__rows { transition: none !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__toggle,
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__download_all {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 32px;
+    border-radius: 8px;
+    padding: 4px 8px;
+    color: var(--fluent-text-secondary);
+    font: 400 12px/20px var(--fluent-font);
+    white-space: nowrap;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__download_all { margin-left: auto; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__tile { border-radius: 10px; background: var(--fluent-fill-subtle); }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .MediaGallery__tile:focus-visible { outline: 2px solid var(--fp-accent); outline-offset: -3px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .size-aware-image__download { width: 32px; height: 32px; border-radius: 8px; background: var(--fp-surface); color: var(--fp-ink); }
+html[data-mm-fluent] .file-preview-modal .modal-content { background: var(--fluent-chat-canvas) !important; }
+html[data-mm-fluent] .file-preview-modal :is(.modal-image__wrapper, .file-preview-modal__content) { background: transparent !important; }
+html[data-mm-fluent] .file-preview-modal-header { background: var(--fluent-control); border-bottom: 1px solid var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .file-preview-modal__file-name { color: var(--fp-ink); font: 600 15px/22px var(--fluent-font); }
+html[data-mm-fluent] .file-preview-modal__file-details { color: var(--fluent-text-secondary); font: 400 12px/20px var(--fluent-font); }
+html[data-mm-fluent] .file-preview-modal :is(.file-preview-modal-main-actions__action-item, .file_preview_modal_main_nav__prev, .file_preview_modal_main_nav__next) { width: 40px; height: 40px; border-radius: 10px; color: var(--fp-ink); }
+html[data-mm-fluent] .file-preview-modal .file-preview-modal__zoom-bar { width: fit-content; max-width: calc(100% - 24px); margin: 8px auto; padding: 4px 12px; border: 1px solid var(--fluent-stroke-subtle); border-radius: 20px; background: var(--fluent-control); }
+html[data-mm-fluent] .file-preview-modal .image_preview__image { border-radius: 8px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-message__text p { margin-bottom: 8px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-message__text > :last-child { margin-bottom: 0; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-message__text blockquote {
+    margin: 8px 0;
+    padding: 8px 12px;
+    border: 0;
+    border-inline-start: 3px solid var(--fp-accent);
+    border-radius: 4px 8px 8px 4px;
+    background: var(--fluent-fill-subtle);
+    color: var(--fluent-text-secondary);
+    font-size: inherit;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-code {
+    max-width: 100%;
+    margin-block: 8px;
+    border: 1px solid var(--fluent-stroke-subtle);
+    border-radius: 8px;
+    background: var(--fluent-fill-subtle);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-code .hljs { border: 0 !important; background: transparent !important; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-code__line-numbers { color: var(--fluent-text-secondary); border-color: var(--fluent-stroke-control); }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__body-reactions-acks { margin-top: 6px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .Reaction {
+    min-height: 28px;
+    border-radius: 10px;
+    border-color: var(--fluent-stroke-subtle);
+    background: var(--fluent-fill-subtle);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .ThreadFooter { margin-top: 8px; left: auto; right: auto; max-width: 100%; flex-wrap: wrap; row-gap: 4px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .ThreadFooter > .indicator { position: static; align-self: center; flex-shrink: 0; margin: 0 4px 0 0; transform: none; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .ThreadFooter .FollowButton { min-height: 28px; border-radius: 9px; font-size: 12px; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .ThreadFooter .ReplyButton {
+    min-height: 28px;
+    padding: 4px 10px;
+    border: 0;
+    border-radius: 9px;
+    background: rgba(var(--fp-accent-rgb), 0.08);
+    color: var(--fp-accent);
+    font: 600 12px/20px var(--fluent-font);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .ThreadFooter .ReplyButton:hover { background: rgba(var(--fp-accent-rgb), 0.15); }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__thumbnail { border-radius: 10px; overflow: hidden; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__details { border-color: var(--fluent-chat-edge); border-radius: 10px; background: var(--fluent-fill-subtle); }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__details:hover { background: var(--fluent-fill-hover); }
+/* Document downloads are one card, rather than a thumbnail and metadata with
+ * separate opaque fills. Image previews keep their native aspect-ratio layout. */
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(.file-icon) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    padding: 10px;
+    border: 1px solid var(--fluent-chat-edge);
+    border-radius: 12px;
+    background: var(--fluent-fill-subtle);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(.file-icon) .post-image__thumbnail {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border: 0;
+    border-radius: 9px;
+    background: rgba(var(--fp-accent-rgb), 0.1);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(.file-icon) .post-image__details {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    padding: 0;
+    background: transparent;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(.file-icon) .file-icon { width: 32px; height: 32px; margin: 6px; background-size: contain; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__header .col__name { min-width: 0; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__header .user-popover { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__hover-actions {
+    border: 1px solid var(--fluent-stroke-control);
+    border-radius: 8px;
+    background: var(--fp-surface);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+html[data-mm-fluent] .FluentSearch {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 10px; padding: 16px 20px;
+    border-bottom: 1px solid var(--fluent-stroke-subtle);
+    flex-shrink: 0;
+}
+html[data-mm-fluent] #sidebar-right:has(.FluentSearch) .search-bar__container { display: none !important; }
+html[data-mm-fluent] .FluentSearch label { display: flex; flex-direction: column; gap: 4px; margin: 0; min-width: 0; font: 400 12px/18px var(--fluent-font); color: var(--fluent-text-secondary); }
+html[data-mm-fluent] .FluentSearch__query { grid-column: 1 / -1; }
+html[data-mm-fluent] .FluentSearch__filters { grid-column: 1 / -1; min-width: 0; }
+html[data-mm-fluent] .FluentSearch__filters summary { cursor: pointer; color: var(--fluent-text-secondary); font: 400 12px/20px var(--fluent-font); }
+html[data-mm-fluent] .FluentSearch__filters > div { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding-top: 10px; }
+html[data-mm-fluent] .FluentSearch input { width: 100%; min-width: 0; height: 32px; padding: 4px 8px; border: 1px solid var(--fluent-stroke-control); border-radius: 6px; background: var(--fluent-control); color: var(--fp-ink); font: 400 13px/20px var(--fluent-font); color-scheme: dark; }
+html[data-mm-fluent-theme='light'] .FluentSearch input { color-scheme: light; }
+html[data-mm-fluent] .FluentSearch button { grid-column: 1 / -1; height: 32px; border: 0; border-radius: 6px; background: var(--fp-accent); color: var(--button-color); font: 600 13px/20px var(--fluent-font); }
+html[data-mm-fluent] .FileSearchResultItem { margin: 4px 12px; width: calc(100% - 24px); padding: 12px; border: 1px solid var(--fluent-stroke-subtle); border-radius: 10px; background: var(--fluent-fill-subtle); }
+html[data-mm-fluent] .FileSearchResultItem:hover { background: var(--fluent-fill-hover); }
+html[data-mm-fluent] .FileSearchResultItem .fileData { min-width: 0; }
+html[data-mm-fluent] .FileSearchResultItem .fileDataName { font: 600 14px/20px var(--fluent-font); overflow: hidden; text-overflow: ellipsis; }
+html[data-mm-fluent] .FileSearchResultItem .fileMetadata { font: 400 11px/18px var(--fluent-font); color: var(--fluent-text-secondary); }

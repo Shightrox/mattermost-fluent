@@ -1,0 +1,65 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+html[data-mm-fluent-context] #sidebar-right {
+    display: flex !important;
+    flex-direction: column;
+    border-left: 1px solid var(--fluent-stroke-subtle);
+    border-radius: 0 !important;
+}
+html[data-mm-fluent-context] #sidebar-right > .sidebar-right-container { flex: 1; min-height: 0; height: auto; }
+html[data-mm-fluent-context] .FluentContext {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    margin: 10px 10px 6px;
+    min-height: 48px;
+    flex-shrink: 0;
+    border: 1px solid var(--fluent-stroke-subtle);
+    border-radius: 14px;
+    background: var(--fluent-control);
+}
+html[data-mm-fluent-context] .FluentContext button {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    height: 32px; min-width: 32px; padding: 0 8px;
+    border: 0; border-radius: 9px;
+    color: var(--fluent-text-secondary); background: transparent;
+    font: 400 13px/20px var(--fluent-font);
+}
+html[data-mm-fluent-context] .FluentContext button[hidden] { display: none; }
+html[data-mm-fluent-context] .FluentContext [data-context='back'] { display: none; }
+html[data-mm-fluent-context] .FluentContext button > span { display: none; }
+html[data-mm-fluent-context] .FluentContext button[aria-pressed='true'] > span { display: inline; }
+html[data-mm-fluent-context] .FluentContext button:hover { background: var(--fluent-fill-hover); color: var(--fp-ink); }
+html[data-mm-fluent-context] .FluentContext button[aria-pressed='true'] { background: rgba(var(--fp-accent-rgb), 0.12); color: var(--fp-ink); }
+html[data-mm-fluent-context] .FluentContext button:disabled { opacity: 0.4; }
+html[data-mm-fluent-context] .FluentContext .icon { font-size: 20px; }
+html[data-mm-fluent-context] .FluentContext button:focus-visible { outline: 2px solid var(--fp-accent); outline-offset: 1px; }
+html[data-mm-fluent-context] #sidebar-right .sidebar--right__header { padding-inline: 20px; min-height: 52px; border-bottom: 1px solid var(--fluent-stroke-subtle); }
+html[data-mm-fluent-context] #sidebar-right .sidebar--right__title { min-width: 0; font: 600 16px/22px var(--fluent-font); }
+html[data-mm-fluent-context][data-mm-fluent-motion='on'] .FluentContext button { transition: background-color 160ms ease, color 160ms ease; }
+
+/* The conversation remains mounted at full width behind the context. No
+ * reparenting or display:none of the virtual list/editor on resize. */
+html[data-mm-fluent-context-narrow] .main-wrapper { grid-template-columns: 264px minmax(0, 1fr) !important; grid-template-areas: 'lhs center' !important; }
+html[data-mm-fluent-context-narrow] .main-wrapper > .sidebar--right--width-holder { display: none !important; }
+html[data-mm-fluent-context-narrow] #channel_view { grid-area: center !important; visibility: hidden; pointer-events: none; margin-right: 0 !important; }
+html[data-mm-fluent-context-narrow] #sidebar-right {
+    position: absolute !important;
+    grid-area: auto !important;
+    left: 264px !important; right: 0 !important; top: 0 !important; bottom: 0 !important;
+    width: auto !important; min-width: 0 !important; max-width: none !important; height: 100% !important;
+    transform: none !important; box-shadow: none !important;
+}
+html[data-mm-fluent-context-narrow] #sidebar-right > .right { display: none; }
+html[data-mm-fluent-context-narrow] .FluentContext [data-context='back'] { display: flex; margin-right: auto; }
+html[data-mm-fluent-context-narrow] #sidebar-right :is(.sidebar--right__close, .sidebar--right__expand, #sbrSidebarCollapse) { display: none; }
+html[data-mm-fluent-context-narrow] #sidebar-right:has(#reply_textbox, #channelInfoRHSChannelSettings, .channel-members-rhs) .search-bar__container { display: none; }
+@media (max-width: 768px) {
+    html[data-mm-fluent-context-narrow] .main-wrapper { grid-template-columns: minmax(0, 1fr) !important; grid-template-areas: 'center' !important; }
+    html[data-mm-fluent-context-narrow] #SidebarContainer { position: absolute !important; grid-area: auto !important; }
+    html[data-mm-fluent-context-narrow] #sidebar-right { left: 0 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent-context] .FluentContext button { transition: none !important; }
+}

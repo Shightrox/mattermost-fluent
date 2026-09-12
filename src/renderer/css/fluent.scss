@@ -1,0 +1,305 @@
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+@use '../../common/palette.fluent.css';
+@use '../../common/tokens.fluent.css';
+@use '../../common/icons.fluent.css';
+@use '../../common/motion.fluent.css';
+
+.FluentCommands { display: none; }
+
+html[data-mm-fluent-shell] {
+    &, body, #app { background: transparent; }
+
+    .AppBackgroundImage { display: none; }
+
+    body {
+        font-family: var(--fluent-font);
+    }
+
+    :is(.WelcomeScreen, .ConfigureServer) {
+        background: radial-gradient(ellipse at 15% 15%, rgba(var(--button-bg-rgb), 0.14), transparent 60%), var(--fp-nav-panel);
+        color: var(--center-channel-color);
+    }
+
+    :is(.WelcomeScreenSlide__title, .ConfigureServer__message-title) {
+        font-family: var(--fluent-font) !important;
+        font-size: clamp(32px, 4vw, 52px) !important;
+        line-height: 1.15 !important;
+        font-weight: 600;
+        letter-spacing: -1px;
+    }
+
+    .WelcomeScreenSlide__image {
+        max-height: 180px;
+        max-width: 360px;
+        object-fit: contain;
+        filter: drop-shadow(0 16px 24px rgb(0 0 0 / 10%));
+    }
+    .WelcomeScreenSlide__image :is(img, svg) { max-height: 180px; max-width: 100%; }
+
+    .WelcomeScreen__content {
+        padding: 28px 40px;
+        margin: 24px;
+        border: 1px solid var(--fp-stroke);
+        border-radius: 24px;
+        background: var(--fp-panel);
+        box-shadow: var(--fp-shadow);
+    }
+
+    :is(.ConfigureServer__card, .Modal_content) {
+        border: 1px solid var(--fp-stroke) !important;
+        border-radius: 18px !important;
+        background: var(--fp-panel) !important;
+        box-shadow: var(--fp-shadow) !important;
+        backdrop-filter: blur(24px);
+    }
+
+    :is(.ConfigureServer__card-title, .Modal_header h1, .Modal_header h2) {
+        font-family: var(--fluent-font) !important;
+        font-weight: 600;
+    }
+
+    :is(.btn, .form-control, .SettingsModal__category) { border-radius: 8px; }
+    .SettingsModal__sidebar { background: var(--fp-nav-panel) !important; }
+
+    &[data-mm-fluent-motion='on'] :is(.btn, .form-control, .SettingsModal__category, .TabBar .tab) {
+        transition: background-color 160ms ease-out, box-shadow 160ms ease-out, color 160ms ease-out;
+    }
+
+    &[data-mm-fluent-motion='off'] :is(.Carousel__slide, .WelcomeScreen__body, .ConfigureServer__body) {
+        animation-duration: 1ms !important;
+        transition: none !important;
+    }
+
+    .topBar > .topBar-bg {
+        background: var(--fp-nav-panel);
+        border-bottom: 0;
+        box-sizing: border-box;
+    }
+
+    .TabBar > li > a {
+        font-family: var(--fluent-font);
+        font-weight: 500;
+        border-radius: 7px;
+    }
+
+    .TabBar .TabBar-tabSeperator { border-color: transparent !important; }
+    .TabBar { flex: 0 1 34%; min-width: 40px; }
+    .TabBar--single { flex: 0 0 auto; }
+    .TabBar--single > li { display: none; }
+    .ServerDropdownButton { min-width: 44px; max-width: 160px; border: 0; }
+    .BasePage:has(.FluentWorkspaceRail) .ServerDropdownButton > span { display: none; }
+    .BasePage:has(.FluentWorkspaceRail) .ServerDropdownButton :is(.TabBar-badge, .ServerDropdownButton__badge) { display: none; }
+    .BasePage:has(.FluentWorkspaceRail) .ServerDropdownButton { max-width: 56px; }
+    .TopBar-button--newTab_divider { background: transparent; }
+    .TopBar-button { border-radius: 7px; }
+    .TopBar-button:hover { background: rgba(var(--center-channel-color-rgb), 0.07); }
+    .TabBar > li > a { font-family: 'Segoe UI', sans-serif !important; font-size: 12px; }
+    .FluentCommands {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        flex-shrink: 0;
+        gap: 8px;
+        margin: 0 16px;
+        -webkit-app-region: drag;
+        button {
+            -webkit-app-region: no-drag;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            height: 28px;
+            min-width: 30px;
+            border: 0;
+            border-radius: 9px;
+            background: rgba(var(--center-channel-color-rgb), 0.055);
+            color: rgba(var(--center-channel-color-rgb), 0.7);
+            font: 400 12px 'Segoe UI', sans-serif;
+            cursor: pointer;
+            &:hover { background: rgba(var(--center-channel-color-rgb), 0.1); }
+            &:focus-visible { outline: 2px solid var(--button-bg); outline-offset: -2px; }
+            &:disabled { opacity: 0.35; cursor: default; }
+            > i { font-size: 18px; line-height: 1; }
+        }
+        .FluentCommands__search { width: clamp(160px, 28vw, 400px); justify-content: flex-start; padding: 0 12px; }
+        .FluentCommands__history { display: flex; gap: 4px; }
+        .FluentCommands__history button { background: transparent; border-color: transparent; }
+        @media (max-width: 650px) {
+            .FluentCommands__search { width: 30px; padding: 0; justify-content: center; span { display: none; } }
+        }
+    }
+
+    .three-dot-menu i.icon-dots-vertical,
+    .full-screen-button {
+        border-radius: 6px;
+        transition: background-color 110ms ease-out;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        :is(.btn, .form-control, .SettingsModal__category, .Carousel__slide, .WelcomeScreen__body, .ConfigureServer__body) {
+            transition: none !important;
+            animation-duration: 1ms !important;
+        }
+        .three-dot-menu i.icon-dots-vertical,
+        .full-screen-button { transition: none; }
+    }
+}
+/* The settings and first-run surfaces use the same type and controls as chat. */
+html[data-mm-fluent-shell] {
+    :is(button, input, select, textarea, label, .ConfigureServer__body, .alternate-link,
+        .WelcomeScreenSlide__subtitle, .SettingsModal, .Modal_content, .ErrorView) {
+        font-family: var(--fluent-font) !important;
+        -webkit-font-smoothing: auto;
+    }
+    .topBar > .topBar-bg { border-bottom: 1px solid var(--fluent-stroke-subtle); }
+    .TabBar > li > a { font-weight: 400; letter-spacing: normal; }
+    .TabBar > li.active > a { background: var(--fluent-fill-selected); color: var(--fp-ink); }
+    .FluentCommands button { border: 1px solid var(--fluent-stroke-subtle); }
+    .WelcomeScreen__content {
+        max-width: 760px;
+        width: calc(100% - 48px) !important;
+        border-radius: 16px;
+        padding: 24px;
+    }
+    .WelcomeScreenSlide__subtitle { color: var(--fluent-text-secondary); font-size: 15px; }
+    .WelcomeScreen__footer { height: 32px; }
+    .ConfigureServer .ConfigureServer__body .ConfigureServer__content {
+        max-width: 1040px;
+        gap: 48px;
+    }
+    .ConfigureServer .ConfigureServer__body .ConfigureServer__content .ConfigureServer__card {
+        border-radius: 12px !important;
+        .ConfigureServer__card-content { padding: 32px; }
+    }
+    .ConfigureServer__message-subtitle { font-size: 16px !important; line-height: 24px !important; }
+    :is(.WelcomeScreen__button, .ConfigureServer__card-form-button) {
+        border-radius: 6px;
+        min-height: 40px;
+        font-weight: 600;
+    }
+    .SettingsModal__sidebar { padding: 16px !important; width: 208px !important; }
+    .SettingsModal__category { display: flex; align-items: center; gap: 12px; }
+    .SettingsModal__category > i { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; flex: 0 0 20px; margin: 0 !important; }
+    .SettingsModal__category > span { margin-left: 0 !important; }
+    .SettingsModal__category {
+        min-height: 36px;
+        border-radius: 6px !important;
+        > span { font-weight: 400 !important; }
+        &.selected {
+            background: var(--fluent-fill-selected) !important;
+            color: var(--fp-ink) !important;
+            box-shadow: inset 3px 0 var(--fp-accent);
+        }
+    }
+    .SettingsModal__content {
+        background: var(--fp-surface);
+        border-left-color: var(--fluent-stroke-subtle) !important;
+    }
+    :is(.RadioSetting, .RangeSetting, .CheckSetting, .SelectSetting, .NumberSetting, .DownloadSetting) {
+        border: 1px solid var(--fluent-stroke-subtle);
+        border-radius: 8px;
+        background: var(--fluent-fill-subtle);
+        padding: 16px;
+    }
+    :is(.RadioSetting__heading, .CheckSetting__heading, .SelectSetting__heading) {
+        font: 600 14px/20px var(--fluent-font);
+    }
+    :is(.RadioSetting__label, .CheckSetting__label) { font-weight: 400; }
+    .CheckSetting__sublabel { color: var(--fluent-text-secondary); font-size: 12px; line-height: 18px; }
+    .ErrorView {
+        padding: 32px;
+        margin: 24px;
+        border: 1px solid var(--fluent-stroke-subtle);
+        border-radius: 16px;
+        background: var(--fp-panel);
+        box-shadow: var(--fp-shadow);
+        .ErrorView-header { font: 600 28px/36px var(--fluent-font); letter-spacing: normal; }
+        .ErrorView-techInfo { color: var(--fluent-text-secondary); }
+    }
+    &[data-mm-fluent-material='solid'] :is(.ConfigureServer__card, .Modal_content) { backdrop-filter: none !important; }
+    .RadioSetting__content { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .RadioSetting__description { color: var(--fluent-text-secondary); font-size: 13px; line-height: 20px; margin: -8px 0 16px; }
+    .RadioSetting__radio {
+        border-radius: 6px;
+        padding: 8px 12px;
+        &[aria-checked='true'] { background: var(--fluent-fill-selected); }
+    }
+    .SettingsModal .RadioSetting .RadioSetting__radio {
+        flex: 1 1 120px;
+        min-height: 36px;
+        margin: 0;
+        padding: 8px 12px;
+        border: 1px solid var(--fluent-stroke-control);
+        text-align: center;
+        &[aria-checked='true'] { border-color: var(--fp-accent); }
+        .RadioSetting__label::before, .RadioSetting__label::after { display: none; }
+    }
+    .SettingsModal :is([id^='RadioSetting_fluentAccent_'], [id^='RadioSetting_fluentTint_']) {
+        display: inline-flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        &::before { content: ''; width: 16px; height: 16px; flex: 0 0 16px; border-radius: 50%; background: var(--fluent-swatch); box-shadow: inset 0 0 0 1px rgb(0 0 0 / 12%); }
+    }
+    #RadioSetting_fluentAccent_blue { --fluent-swatch: #76c5ed; }
+    #RadioSetting_fluentAccent_violet { --fluent-swatch: #c4b5fd; }
+    #RadioSetting_fluentAccent_green { --fluent-swatch: #91d7ad; }
+    &[data-mm-fluent-theme='light'] {
+        #RadioSetting_fluentAccent_blue { --fluent-swatch: #2564cb; }
+        #RadioSetting_fluentAccent_violet { --fluent-swatch: #6d3ec5; }
+        #RadioSetting_fluentAccent_green { --fluent-swatch: #247348; }
+    }
+    :is(button, a, input, select):focus-visible { outline: 2px solid var(--fp-accent); outline-offset: 2px; }
+    @media (max-width: 700px) {
+        .SettingsModal__sidebar { width: 168px !important; padding: 8px !important; }
+        .SettingsModal__content { padding: 20px 16px !important; }
+        .ConfigureServer .ConfigureServer__body .ConfigureServer__content { gap: 16px; }
+        .WelcomeScreen__content { padding: 12px; margin: 12px; width: calc(100% - 24px) !important; }
+    }
+}
+
+html[data-mm-fluent-shell] .ErrorView {
+    gap: 12px;
+    padding: 28px;
+    border: 1px solid var(--fluent-stroke-subtle);
+    border-radius: 20px;
+    background: var(--fluent-control);
+    .ErrorView-header { font: 600 28px/36px var(--fluent-font); letter-spacing: 0; }
+    > span { margin-top: 0; }
+    details { padding: 12px; border: 1px solid var(--fluent-stroke-subtle); border-radius: 10px; }
+    summary { cursor: pointer; font-weight: 600; }
+    code { display: block; padding-top: 8px; white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+
+.ErrorView-glyph, .LoadingScreen-status { display: none; }
+html[data-mm-fluent-shell] .ErrorView {
+    > svg { display: none; }
+    .ErrorView-glyph { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; font-size: 32px; border-radius: 18px; background: var(--fluent-fill-subtle); color: var(--fp-accent); }
+}
+html[data-mm-fluent-shell] .LoadingScreen-status { display: block; position: absolute; top: calc(50% + 84px); left: 16px; right: 16px; text-align: center; font: 400 14px/22px var(--fluent-font); color: var(--fluent-text-secondary); }
+
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentAccent_teal { --fluent-swatch: #75d6cf; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentAccent_teal { --fluent-swatch: #006f69; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentAccent_rose { --fluent-swatch: #efa9c4; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentAccent_rose { --fluent-swatch: #a13060; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentAccent_amber { --fluent-swatch: #edc477; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentAccent_amber { --fluent-swatch: #805500; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentAccent_coral { --fluent-swatch: #f5ad96; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentAccent_coral { --fluent-swatch: #a33f28; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentAccent_indigo { --fluent-swatch: #acbaff; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentAccent_indigo { --fluent-swatch: #4656b3; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_neutral { --fluent-swatch: #202020; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_neutral { --fluent-swatch: #f0f3f8; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_slate { --fluent-swatch: #252c38; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_slate { --fluent-swatch: #eef1f7; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_ocean { --fluent-swatch: #183239; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_ocean { --fluent-swatch: #e5f2f5; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_forest { --fluent-swatch: #25352c; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_forest { --fluent-swatch: #ebf2eb; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_plum { --fluent-swatch: #352a3b; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_plum { --fluent-swatch: #f4edf6; }
+html[data-mm-fluent-theme='dark'] #RadioSetting_fluentTint_sand { --fluent-swatch: #393126; }
+html[data-mm-fluent-theme='light'] #RadioSetting_fluentTint_sand { --fluent-swatch: #f7f0e4; }

@@ -1,0 +1,337 @@
+// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+// Microsoft Fluent System Icons (MIT). Bundle only mapped glyphs, never the full set.
+const fs = require('fs');
+const path = require('path');
+const shapes = [
+    [
+        [
+            "settings-outline",
+            "cog-outline"
+        ],
+        "settings"
+    ],
+    [
+        [
+            "palette-outline"
+        ],
+        "color"
+    ],
+    [
+        [
+            "keyboard-outline"
+        ],
+        "keyboard"
+    ],
+    [
+        [
+            "check"
+        ],
+        "checkmark"
+    ],
+    [
+        [
+            "magnify"
+        ],
+        "search"
+    ],
+    [
+        [
+            "globe"
+        ],
+        "globe"
+    ],
+    [
+        [
+            "lock-outline",
+            "lock"
+        ],
+        "lock_closed"
+    ],
+    [
+        [
+            "pencil-outline",
+            "draft-indicator"
+        ],
+        "edit"
+    ],
+    [
+        [
+            "file-text-outline",
+            "file-document-outline"
+        ],
+        "document_text"
+    ],
+    [
+        [
+            "star-outline"
+        ],
+        "star"
+    ],
+    [
+        [
+            "content-copy"
+        ],
+        "copy"
+    ],
+    [
+        [
+            "filter-variant"
+        ],
+        "filter"
+    ],
+    [
+        [
+            "chevron-down"
+        ],
+        "chevron_down"
+    ],
+    [
+        [
+            "chevron-up"
+        ],
+        "chevron_up"
+    ],
+    [
+        [
+            "chevron-right"
+        ],
+        "chevron_right"
+    ],
+    [
+        [
+            "chevron-left"
+        ],
+        "chevron_left"
+    ],
+    [
+        [
+            "arrow-left"
+        ],
+        "arrow_left"
+    ],
+    [
+        [
+            "arrow-right"
+        ],
+        "arrow_right"
+    ],
+    [
+        [
+            "arrow-down"
+        ],
+        "arrow_down"
+    ],
+    [
+        [
+            "plus"
+        ],
+        "add"
+    ],
+    [
+        [
+            "close"
+        ],
+        "dismiss"
+    ],
+    [
+        [
+            "dots-horizontal"
+        ],
+        "more_horizontal"
+    ],
+    [
+        [
+            "dots-vertical"
+        ],
+        "more_vertical"
+    ],
+    [
+        [
+            "bookmark-outline"
+        ],
+        "bookmark"
+    ],
+    [
+        [
+            "bell-outline"
+        ],
+        "alert"
+    ],
+    [
+        [
+            "account-outline"
+        ],
+        "person"
+    ],
+    [
+        [
+            "account-multiple-outline"
+        ],
+        "people"
+    ],
+    [
+        [
+            "paperclip"
+        ],
+        "attach"
+    ],
+    [
+        [
+            "emoticon-happy-outline"
+        ],
+        "emoji"
+    ],
+    [
+        [
+            "send"
+        ],
+        "send"
+    ],
+    [
+        [
+            "message-text-outline"
+        ],
+        "chat"
+    ],
+    [
+        ["forum-outline"],
+        "chat_multiple"
+    ],
+    [
+        [
+            "server-variant",
+            "server"
+        ],
+        "server"
+    ],
+    [
+        [
+            "download-outline",
+            "download"
+        ],
+        "arrow_download"
+    ],
+    [
+        [
+            "information-outline"
+        ],
+        "info"
+    ],
+    [
+        [
+            "at"
+        ],
+        "mention"
+    ],
+    [
+        [
+            "reply-outline"
+        ],
+        "arrow_reply"
+    ],
+    [
+        [
+            "phone-outline", "phone", "phone-in-talk"
+        ],
+        "call"
+    ],
+    [
+        [
+            "pin-outline"
+        ],
+        "pin"
+    ],
+    [
+        [
+            "format-bold"
+        ],
+        "text_bold"
+    ],
+    [
+        [
+            "format-italic"
+        ],
+        "text_italic"
+    ],
+    [
+        [
+            "format-underline"
+        ],
+        "text_underline"
+    ],
+    [
+        [
+            "format-strikethrough"
+        ],
+        "text_strikethrough"
+    ],
+    [
+        [
+            "link-variant"
+        ],
+        "link"
+    ],
+    [
+        [
+            "code-tags"
+        ],
+        "code"
+    ]
+];
+shapes.push(
+    [['email-outline'], 'mail'],
+    [['account-plus-outline'], 'person_add'],
+    [['help-circle-outline'], 'question_circle'],
+    [['lightbulb-outline'], 'lightbulb'],
+    [['eye-outline'], 'eye'],
+    [['dock-left'], 'panel_left'],
+    [['tune'], 'options'],
+    [['open-in-new'], 'open'],
+    [['plus-box'], 'add_square'],
+);
+shapes.push([['fluent-focus'], 'panel_left_contract'], [['delete-outline'], 'delete'], [['wifi-off'], 'wifi_off'], [['alert-outline'], 'warning']);
+const scope='html:is([data-mm-fluent], [data-mm-fluent-shell])';
+let css='/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.\n * See LICENSE.txt for license information. */\n/* Generated by scripts/generate-fluent-icons.cjs; Microsoft Fluent System Icons 1.1.339 (MIT), see NOTICE-Fluent-Icons.txt. */\n';
+for(const [names,asset] of shapes){
+    const svg=fs.readFileSync(path.join(__dirname, '../node_modules/@fluentui/svg-icons/icons', `${asset}_20_regular.svg`), 'utf8');
+    const url='data:image/svg+xml,'+encodeURIComponent(svg).replace(/'/g,'%27');
+    css+=names.flatMap(name=>[`${scope} .icon.icon-${name}::before`, `${scope} i.icon-${name}::before`]).join(',\n')+` {\n    content: '' !important;\n    display: inline-block;\n    font-size: inherit !important;\n    line-height: 1;\n    width: 1em; height: 1em;\n    margin: 0;\n    vertical-align: -0.125em;\n    background: currentColor;\n    mask: url("${url}") center / contain no-repeat;\n}\n`;
+}
+const channelGlyph=fs.readFileSync(path.join(__dirname, '../node_modules/@fluentui/svg-icons/icons/number_symbol_20_regular.svg'), 'utf8');
+css+=`html[data-mm-fluent] :is(#SidebarContainer, #channel-header) .icon-globe::before { mask-image: url("data:image/svg+xml,${encodeURIComponent(channelGlyph).replace(/'/g,'%27')}"); }\n`;
+const draft=fs.readFileSync(path.join(__dirname, '../node_modules/@fluentui/svg-icons/icons/document_edit_20_regular.svg'), 'utf8');
+css+=`html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink > .icon-send::before { mask-image: url("data:image/svg+xml,${encodeURIComponent(draft).replace(/'/g,'%27')}"); }\n`;
+// Modern webapp controls use inline SVG rather than the legacy icon font.
+// Target named core actions only, preserving the original button and its label.
+const controls = [
+    ['#previewArrowLeft', 'chevron_left'],
+    ['#previewArrowRight', 'chevron_right'],
+    ['#channelHeaderDropdownButton', 'chevron_down'],
+    ['.MediaGallery__download_all', 'arrow_download'],
+    ['.size-aware-image__download', 'arrow_download'],
+    ['#FormattingControl_bold', 'text_bold'],
+    ['#FormattingControl_italic', 'text_italic'],
+    ['#FormattingControl_strike', 'text_strikethrough'],
+    ['#FormattingControl_heading', 'text_header_1'],
+    ['#FormattingControl_link', 'link'],
+    ['#FormattingControl_code', 'code'],
+    ['#FormattingControl_quote', 'text_quote'],
+    ['#FormattingControl_ul', 'text_bullet_list_ltr'],
+    ['#FormattingControl_ol', 'text_number_list_ltr'],
+    ['#messagePriority', 'important'],
+    ['#emojiPickerButton', 'emoji'],
+    ['#fileUploadButton', 'attach'],
+    ['.SendMessageButton', 'send'],
+    ['#channel-info-btn', 'info'],
+    ['#channelHeaderFilesButton', 'document'],
+    ['#member_rhs', 'people'],
+    ['.SidebarMenu_menuButton', 'more_vertical'],
+];
+for (const [selector, asset] of controls) {
+    const svg = fs.readFileSync(path.join(__dirname, '../node_modules/@fluentui/svg-icons/icons', `${asset}_20_regular.svg`), 'utf8');
+    const url = 'data:image/svg+xml,' + encodeURIComponent(svg).replace(/'/g, '%27');
+    css += `html[data-mm-fluent] ${selector} > svg { width: 20px; height: 20px; flex-shrink: 0; background: currentColor; mask: url("${url}") center / contain no-repeat; }\n`;
+    css += `html[data-mm-fluent] ${selector} > svg > * { visibility: hidden; }\n`;
+}
+fs.writeFileSync(path.join(__dirname,'../src/common/icons.fluent.css'),css);

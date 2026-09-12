@@ -1,0 +1,494 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+
+/* Local presentation for recognized server UI. Retain IDs, DOM ownership,
+ * hit targets, unread semantics and editor behavior. */
+html[data-mm-fluent] {
+    --mm-fluent-radius: 8px;
+    --mm-fluent-ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --mm-fluent-border: rgba(var(--center-channel-color-rgb), 0.12);
+    --mm-fluent-shadow: 0 12px 36px rgb(0 0 0 / 16%), 0 1px 3px rgb(0 0 0 / 8%);
+}
+
+html[data-mm-fluent],
+html[data-mm-fluent] body,
+html[data-mm-fluent] #root,
+html[data-mm-fluent] #app-content,
+html[data-mm-fluent] .app__body {
+    background-color: transparent !important;
+}
+
+html[data-mm-fluent] body {
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+    -webkit-font-smoothing: auto;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) {
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid rgba(var(--sidebar-text-rgb), 0.1);
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink {
+    border-radius: var(--mm-fluent-radius);
+    /* Keep stock 32px row geometry for drag/drop and sidebar scrolling. */
+    background-clip: padding-box;
+    border-inline: 6px solid transparent;
+    padding-left: 13px;
+    padding-right: 16px;
+}
+
+/* Reserve the action area instead of relaying out text on each hover. Badges
+ * retain their layout box because older Desktop versions measure offsetHeight. */
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink:is(:hover, .menuOpen) {
+    padding-right: 16px;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink .SidebarMenu {
+    display: block;
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink:is(:hover, :focus-within, .menuOpen) .SidebarMenu {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink .SidebarMenu_menuButton {
+    margin-right: 0;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink:is(:hover, .menuOpen) :is(.badge, .channel-pencil-icon, .SidebarChannelLink__join-request-dot) {
+    position: relative;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink.active {
+    background-color: rgba(var(--sidebar-text-rgb), 0.12);
+    box-shadow: inset 3px 0 0 var(--sidebar-text-active-border);
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink:focus-visible {
+    outline: 2px solid var(--sidebar-text-active-border);
+    outline-offset: -3px;
+}
+
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarChannel .SidebarLink:hover {
+    background-color: rgba(var(--sidebar-text-rgb), 0.035);
+}
+
+html[data-mm-fluent] .mm-fluent-hover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    pointer-events: none;
+    border-radius: var(--mm-fluent-radius);
+    background: rgba(var(--sidebar-text-rgb), 0.075);
+    box-shadow: inset 0 0 0 1px rgba(var(--sidebar-text-rgb), 0.055);
+    opacity: 0;
+    contain: layout style;
+}
+
+html[data-mm-fluent] .mm-fluent-hover[data-visible] {
+    opacity: 1;
+}
+
+html[data-mm-fluent][data-mm-fluent-motion='on'] .mm-fluent-hover[data-tracking] {
+    transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 120ms ease-out;
+}
+
+html[data-mm-fluent] #channel-header {
+    border-bottom: 1px solid var(--mm-fluent-border);
+    box-shadow: 0 1px 0 rgba(var(--center-channel-color-rgb), 0.025);
+}
+
+html[data-mm-fluent] #post-list {
+    background: transparent;
+}
+
+html[data-mm-fluent] .post {
+    border-radius: 6px;
+}
+
+html[data-mm-fluent] .post-image__column img {
+    border-radius: 8px;
+}
+
+html[data-mm-fluent] .modal-content {
+    border: 1px solid var(--mm-fluent-border);
+    border-radius: 14px;
+    box-shadow: var(--mm-fluent-shadow);
+}
+
+html[data-mm-fluent] .Menu__content {
+    border: 1px solid var(--mm-fluent-border);
+    border-radius: 10px;
+    box-shadow: var(--mm-fluent-shadow);
+}
+
+html[data-mm-fluent] .btn {
+    border-radius: 6px;
+}
+
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(.btn, .SidebarLink) {
+    transition: background-color 110ms ease-out, box-shadow 110ms ease-out;
+}
+
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(.Menu__content, .modal-content) {
+    animation: mm-fluent-surface-in 160ms var(--mm-fluent-ease);
+}
+
+@keyframes mm-fluent-surface-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent] :is(.mm-fluent-hover, .btn, .post, .SidebarLink, .Menu__content, .modal-content) {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+@media (forced-colors: active) {
+    html[data-mm-fluent] .mm-fluent-hover { display: none; }
+}
+
+/* Remove nested opaque canvases; material is painted once per major pane. */
+html[data-mm-fluent] :is(.app__content, .channel-view, #channel_view, .channel__wrap, .post-list__table, #post-list, #create_post, .SidebarNavContainer) {
+    background: transparent !important;
+}
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) {
+    background: var(--fp-nav-panel) !important;
+}
+html[data-mm-fluent] :is(#channel-header, #global-header, .SidebarHeader, .SidebarChannelNavigator) {
+    background: var(--fp-nav-panel) !important;
+    border-color: var(--fp-stroke) !important;
+}
+html[data-mm-fluent] :is(.modal-content, .Menu__content) {
+    background: var(--fp-panel);
+    backdrop-filter: blur(24px);
+}
+/* Mattermost's header/footer routes include login, MFA and account recovery. */
+html[data-mm-fluent-surface='auth'] body {
+    color: var(--center-channel-color);
+}
+html[data-mm-fluent-surface='auth'] .header-footer-route-container {
+    background: radial-gradient(ellipse at 10% 10%, rgba(var(--button-bg-rgb), 0.13), transparent 55%), var(--fp-nav-panel) !important;
+}
+html[data-mm-fluent-surface='auth'] .hfroute-header {
+    min-height: 88px;
+}
+html[data-mm-fluent-surface='auth'] .login-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 32px 48px 64px;
+}
+html[data-mm-fluent-surface='auth'] .login-body-content {
+    width: 100%;
+    max-width: 1120px;
+    margin: auto;
+    gap: 64px;
+    align-items: center;
+}
+html[data-mm-fluent-surface='auth'] .login-body-message {
+    flex: 1;
+    width: auto;
+    max-width: 480px;
+}
+html[data-mm-fluent-surface='auth'] :is(.login-body-message-title, .content-layout-column-title) {
+    font-family: 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+    font-size: clamp(32px, 4vw, 56px);
+    line-height: 1.12;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    color: var(--center-channel-color);
+}
+html[data-mm-fluent-surface='auth'] .login-body-message-subtitle {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(var(--center-channel-color-rgb), 0.65);
+    margin-top: 24px;
+}
+html[data-mm-fluent-surface='auth'] .login-body-action {
+    width: min(100%, 440px);
+    flex-shrink: 0;
+}
+html[data-mm-fluent-surface='auth'] :is(.login-body-card, .content-layout-column) {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 20px 0;
+    border: 1px solid var(--fp-stroke);
+    border-radius: 20px;
+    background: var(--fp-panel);
+    box-shadow: var(--fp-shadow);
+    backdrop-filter: blur(24px);
+}
+html[data-mm-fluent-surface='auth'] .content-layout-column {
+    max-width: 540px;
+    padding: 36px;
+    margin: 40px auto;
+}
+html[data-mm-fluent-surface='auth'] .login-body-card-content { padding: 36px; }
+html[data-mm-fluent-surface='auth'] .login-body-card-title {
+    display: block;
+    font: 600 24px/1.4 'Segoe UI Variable Display', 'Segoe UI', sans-serif;
+    color: var(--center-channel-color);
+}
+html[data-mm-fluent-surface='auth'] :is(.Input_container, .form-control) {
+    border-radius: 8px;
+    background: rgba(var(--center-channel-bg-rgb), 0.6);
+    color: var(--center-channel-color);
+}
+html[data-mm-fluent-surface='auth'] .login-body-card-form-button-submit {
+    border-radius: 8px;
+    background: var(--button-bg);
+    color: var(--button-color);
+    min-height: 44px;
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(.login-body-card, .content-layout-column) {
+    animation: mm-fluent-surface-in 300ms var(--mm-fluent-ease);
+}
+@media (max-width: 1000px) {
+    html[data-mm-fluent-surface='auth'] .login-body-content { flex-direction: column; gap: 24px; }
+    html[data-mm-fluent-surface='auth'] .login-body { padding: 24px; }
+    html[data-mm-fluent-surface='auth'] .login-body-message { text-align: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent] :is(.login-body-card, .content-layout-column) { animation: none !important; }
+}
+
+/* Older webapps emit literal colors through applyTheme/changeCss. Override the
+ * actual surfaces too, rather than assuming every rule consumes theme tokens. */
+html[data-mm-fluent] body.app__body {
+    color: var(--center-channel-color) !important;
+}
+html[data-mm-fluent] :is(.app__content, #channel_view, .channel-view, .channel__wrap) {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+html[data-mm-fluent] :is(#post-list, .post-list__table, .post-list__content, .post-list-holder, #rhsContainer, .sidebar--right, .SidebarRight, .search-results-container) {
+    background: var(--fp-panel) !important;
+    color: var(--center-channel-color) !important;
+    border-color: var(--fp-stroke) !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] :is(.post-list__table, .post-list__content, .search-results-container) {
+    background: transparent !important;
+}
+html[data-mm-fluent] :is(#channel-header, .channel-header, .sidebar--right__header, .sidebar-right__header) {
+    background: var(--fp-panel) !important;
+    color: var(--center-channel-color) !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--fp-stroke) !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] :is(.post-message__text, .post__body, .post__content, .search-item__container, .custom-textarea, .channel-header__title, .channel-header .heading) {
+    color: var(--center-channel-color) !important;
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+}
+html[data-mm-fluent] :is(.post-message__text, .post__body) { line-height: 1.55; }
+html[data-mm-fluent] :is(.post__time, .post__header .col__reply, .channel-header__description) {
+    color: rgba(var(--center-channel-color-rgb), 0.5) !important;
+}
+html[data-mm-fluent] :is(.post-message__text a, .post__link, .post__header .user-popover) {
+    color: var(--link-color) !important;
+}
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarLink {
+    color: var(--sidebar-text) !important;
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+    font-weight: 400;
+}
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarLink.unread-title { font-weight: 600; }
+html[data-mm-fluent] :is(#SidebarContainer, #sidebar-left) .SidebarLink.active {
+    background: rgba(var(--button-bg-rgb), 0.1) !important;
+    box-shadow: inset 2px 0 0 var(--button-bg);
+}
+html[data-mm-fluent] :is(.SidebarCategoryHeader, .SidebarCategoryHeader_name) {
+    color: rgba(var(--sidebar-text-rgb), 0.52) !important;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+}
+html[data-mm-fluent] #create_post {
+    background: var(--fp-panel) !important;
+    padding-bottom: 12px;
+}
+/* AdvancedTextEditor is a layout wrapper, not the input surface. Its body is
+ * the only framed element, in both Channels and the thread editor. Retain the
+ * stock textarea sizing/padding used by AutoHeight and the formatting controls. */
+html[data-mm-fluent] .AdvancedTextEditor {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor__body {
+    background: color-mix(in srgb, var(--center-channel-bg) 96%, var(--center-channel-color)) !important;
+    border: 1px solid var(--fp-stroke) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 5%) !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor__body:focus-within {
+    border-color: rgba(var(--button-bg-rgb), 0.6) !important;
+    box-shadow: inset 0 -1px var(--button-bg) !important;
+}
+html[data-mm-fluent] .AdvancedTextEditor :is(.custom-textarea, .textbox-preview-area) {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: var(--center-channel-color) !important;
+}
+html[data-mm-fluent] :is(.Reaction, .post-reaction, .post-reaction--current-user) {
+    border-radius: 6px;
+    border-color: var(--fp-stroke) !important;
+    background: rgba(var(--center-channel-color-rgb), 0.055) !important;
+    color: var(--center-channel-color) !important;
+}
+html[data-mm-fluent] #global-header {
+    background: var(--fp-nav-panel) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+html[data-mm-fluent] #global-header > :first-child { flex-basis: auto; }
+/* Branding is decorative inside the switcher; the button and its menu remain. */
+html[data-mm-fluent] #global-header button[aria-controls='product-switcher-menu'] > span { display: none; }
+html[data-mm-fluent] #global-header :is(button, input) { border-radius: 7px; }
+html[data-mm-fluent] #global-header :is(input, .search-bar) {
+    background: rgba(var(--center-channel-color-rgb), 0.055) !important;
+    color: var(--center-channel-color) !important;
+}
+html[data-mm-fluent] ::selection { background: rgba(var(--button-bg-rgb), 0.28); }
+
+/* Unify prose and controls without replacing the icon or code font families. */
+html[data-mm-fluent] :is(button, input, textarea, .SidebarLink, .SidebarHeading, .SidebarCategoryHeader_name, .channel-header__title, .post-message__text, .post__body, .post__content, .post__header, .post__time, .user-popover, .search-bar) {
+    font-family: 'Segoe UI', system-ui, sans-serif !important;
+    letter-spacing: normal !important;
+}
+html[data-mm-fluent] :is(.post-message__text, .post__body, .AdvancedTextEditor textarea) {
+    font-size: var(--fluent-message-size);
+    line-height: var(--fluent-message-line);
+    font-weight: 400;
+}
+html[data-mm-fluent] :is(.post__header .user-popover, .channel-header .heading) { font-weight: 600 !important; }
+html[data-mm-fluent] .post__time { font-size: 12px; font-weight: 400; }
+html[data-mm-fluent] .SidebarLink { font-size: 14px; }
+html[data-mm-fluent] .SidebarCategoryHeader_name { font-size: 12px; text-transform: none; }
+
+/* Owned theme surfaces: server code-theme and literal highlight rules must not
+ * bring a second palette into the conversation. Keep syntax distinctions. */
+html[data-mm-fluent] :is(.post-message__text pre, .post-message__text .hljs) {
+    background: rgba(var(--center-channel-color-rgb), 0.045) !important;
+    color: var(--center-channel-color) !important;
+    border-color: var(--fp-stroke) !important;
+    border-radius: 7px;
+    font-family: Consolas, 'Cascadia Mono', monospace !important;
+    font-size: 13px;
+}
+html[data-mm-fluent] .post-message__text .hljs { background: transparent !important; }
+html[data-mm-fluent] :is(.hljs-comment, .hljs-quote) { color: rgba(var(--center-channel-color-rgb), 0.5) !important; }
+html[data-mm-fluent] :is(.hljs-keyword, .hljs-selector-tag, .hljs-name) { color: var(--button-bg) !important; }
+html[data-mm-fluent] :is(.hljs-string, .hljs-number, .hljs-literal, .hljs-attr) { color: color-mix(in srgb, var(--button-bg) 65%, var(--center-channel-color)) !important; }
+html[data-mm-fluent] :is(.new-message-separator, .new-messages__text) {
+    color: var(--button-bg) !important;
+    border-color: rgba(var(--button-bg-rgb), 0.3) !important;
+}
+html[data-mm-fluent] :is(.post--highlight, .post--pinned) {
+    background: rgba(var(--button-bg-rgb), 0.055) !important;
+}
+html[data-mm-fluent] :is(.badge, .SidebarChannel .badge) {
+    background: var(--button-bg) !important;
+    color: var(--button-color) !important;
+}
+html[data-mm-fluent] #global-header { padding: 0 12px; }
+html[data-mm-fluent] #global-header :is(button, input) { font-size: 13px; }
+html[data-mm-fluent] #global-header input { border: 1px solid var(--fp-stroke) !important; }
+html[data-mm-fluent] :is(.channel-header, .sidebar--right__header) { font-size: 14px; }
+
+/* The original toolbar becomes a flyout; its React controls stay mounted. */
+html[data-mm-fluent-compact] #global-header {
+    position: fixed !important;
+    inset: 0 0 auto !important;
+    height: 48px;
+    z-index: 99;
+    transform: translateY(-110%);
+    opacity: 0;
+    pointer-events: none;
+    background: var(--center-channel-bg) !important;
+    border-bottom: 1px solid var(--fp-stroke) !important;
+    box-shadow: 0 8px 24px rgb(0 0 0 / 15%) !important;
+}
+html[data-mm-fluent-compact][data-mm-fluent-toolbar-open] #global-header {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+}
+html[data-mm-fluent-compact][data-mm-fluent-motion='on'] #global-header {
+    transition: transform 160ms var(--mm-fluent-ease), opacity 120ms ease-out;
+}
+html[data-mm-fluent] :is(.SidebarLink .badge, .SidebarLink .unreadMentions) {
+    font-family: 'Segoe UI', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: auto !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarLink .badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 20px;
+    min-height: 18px;
+    height: auto;
+    padding: 0 6px;
+    gap: 4px;
+    line-height: 18px;
+    border-radius: 9px;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink .badge {
+    background: rgba(var(--sidebar-text-rgb), 0.07) !important;
+    color: rgba(var(--sidebar-text-rgb), 0.7) !important;
+    padding: 0 6px !important;
+    min-width: 36px;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink .badge .icon.icon-draft-indicator,
+html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink .badge .icon.icon-draft-indicator::before {
+    width: 12px;
+    min-width: 12px;
+    margin: 0;
+    padding: 0;
+    font-size: 12px !important;
+    line-height: 18px;
+    font-style: normal;
+    font-weight: 400;
+    -webkit-font-smoothing: auto !important;
+}
+html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink .badge .icon.icon-draft-indicator::before { display: block; }
+html[data-mm-fluent] #SidebarContainer :is(.icon, .icon::before) {
+    -webkit-font-smoothing: auto !important;
+}
+/* A draft is a document being edited, rather than a send action. Use a small
+ * vector outline instead of the old filled paper-plane font glyph. */
+html[data-mm-fluent] #SidebarContainer .SidebarDrafts .SidebarLink > .icon-send::before {
+    content: '';
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    background: currentColor;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 3l5 5M11 18l-5 1 1-5L18 3a2 2 0 0 1 3 3Z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent-compact] #global-header { transition: none !important; }
+}

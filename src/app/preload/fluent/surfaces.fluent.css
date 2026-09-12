@@ -1,0 +1,159 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+/* Named core webapp surfaces only. Do not target hashed plugin components. */
+/* Modern menus are MUI portals, not the legacy .Menu__content surface. */
+html[data-mm-fluent] .menu_menuStyled .MuiPopover-paper {
+    padding: 4px;
+    border: 1px solid var(--fluent-stroke-control);
+    border-radius: 10px;
+    background: var(--fp-surface);
+    color: var(--fp-ink);
+    box-shadow: var(--fp-shadow);
+}
+html[data-mm-fluent] .menu_menuStyled [role='menu'] { padding: 0; }
+html[data-mm-fluent] .menu_menuStyled [role='menuitem'] {
+    min-height: 36px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font: 400 14px/20px var(--fluent-font);
+    gap: 12px;
+}
+html[data-mm-fluent] .menu_menuStyled [role='menuitem']:is(:hover, .Mui-focusVisible) { background: var(--fluent-fill-hover); }
+html[data-mm-fluent] .menu_menuStyled .MuiDivider-root { margin: 4px 8px; border-color: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .menu_menuStyled .trailing-elements { color: var(--fluent-text-secondary); font-size: 12px; }
+html[data-mm-fluent] #emojiGifPicker {
+    border: 1px solid var(--fluent-stroke-control);
+    border-radius: 12px;
+    background: var(--fp-surface);
+    box-shadow: var(--fp-shadow);
+    color: var(--fp-ink);
+    font-family: var(--fluent-font);
+}
+html[data-mm-fluent] #emojiGifPicker :is(.emoji-picker__search, .emoji-picker__text-container) { color: var(--fp-ink); background: var(--fluent-control); border-radius: 6px; }
+html[data-mm-fluent] #emojiGifPicker .emoji-picker__search::placeholder { color: var(--fluent-text-secondary); opacity: 1; }
+html[data-mm-fluent] #emojiGifPicker .emoji-picker__search-icon { color: var(--fluent-text-secondary); }
+html[data-mm-fluent] #emojiGifPicker :is(.emoji-picker__category, .emoji-picker__item) { border-radius: 6px; }
+html[data-mm-fluent] #emojiGifPicker .nav-tabs > li.active > a { border-bottom-color: var(--fp-accent); }
+html[data-mm-fluent] #emojiGifPicker :is(.emoji-picker__category-title, .emoji-picker__preview-name) { color: var(--fluent-text-secondary); font: 600 12px/20px var(--fluent-font); }
+html[data-mm-fluent] .channel-members-rhs :is(.add-members, .manage-members) { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 6px; }
+html[data-mm-fluent] .channel-members-rhs__member-list-separator { font: 600 12px/20px var(--fluent-font); color: var(--fluent-text-secondary); }
+html[data-mm-fluent] .channel-members-rhs__member { border-radius: 6px; }
+html[data-mm-fluent] :is(.GenericModal, .UserSettingsModal, .user-profile-popover, .suggestion-list, .Menu__content) {
+    font-family: var(--fluent-font);
+    color: var(--fp-ink);
+}
+html[data-mm-fluent] .user-profile-popover {
+    border: 1px solid var(--fluent-stroke-control);
+    border-radius: 12px;
+    background: var(--fp-surface);
+    box-shadow: var(--fp-shadow);
+}
+html[data-mm-fluent] .user-profile-popover .user-popover-image { width: 80px; height: 80px; margin: 8px auto 16px; }
+html[data-mm-fluent] .user-profile-popover #userAvatar { width: 80px; height: 80px; }
+html[data-mm-fluent] .user-profile-popover .user-popover-status { width: 20px; height: 20px; }
+html[data-mm-fluent] .user-profile-popover__heading { font: 600 16px/24px var(--fluent-font); }
+html[data-mm-fluent] .user-profile-popover :is(.user-profile-popover__email, .user-popover__subtitle-text) { font: 400 13px/20px var(--fluent-font); }
+html[data-mm-fluent] .user-profile-popover .user-popover__subtitle { color: var(--fluent-text-secondary); font: 400 12px/18px var(--fluent-font); }
+html[data-mm-fluent] .user-profile-popover hr { border-color: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .user-profile-popover button { border-radius: 6px; }
+html[data-mm-fluent] .modal-header {
+    background: transparent;
+    border-bottom: 1px solid var(--fluent-stroke-subtle);
+    padding: 20px 24px;
+}
+/* GenericModal nests its title wrapper inside .modal-header. */
+html[data-mm-fluent] .modal-header .GenericModal__header { padding: 0; border: 0; background: transparent; }
+html[data-mm-fluent] .modal-header .modal-title { margin: 0; }
+html[data-mm-fluent] .modal-header .modal-subheading { margin-top: 8px; color: var(--fluent-text-secondary); font: 400 12px/18px var(--fluent-font); }
+html[data-mm-fluent] #quickSwitchModal #quickSwitchHeader { margin: 0; font: 600 20px/28px var(--fluent-font); }
+html[data-mm-fluent] #quickSwitchModal .suggestion-list { box-sizing: border-box; max-width: 100%; padding: 0; border: 0 !important; border-radius: 0 0 12px 12px; box-shadow: none !important; }
+html[data-mm-fluent] #quickSwitchModal .suggestion-list__content { width: 100%; max-width: 100%; box-sizing: border-box; }
+html[data-mm-fluent] #quickSwitchModal .suggestion-list__item { border-radius: 6px; }
+html[data-mm-fluent] #quickSwitchModal .suggestion-list__desc { color: var(--fluent-text-secondary); font-size: 12px; }
+html[data-mm-fluent] #moreDmModal .more-direct-channels { height: min(680px, calc(100vh - 64px)); }
+html[data-mm-fluent] #moreDmModal .more-direct-channels .modal-content { height: 100%; min-height: 0; max-height: 100%; }
+html[data-mm-fluent] #moreDmModal .more-modal__name { font: 600 14px/20px var(--fluent-font); }
+html[data-mm-fluent] #moreDmModal .more-modal__description { font: 400 13px/20px var(--fluent-font); color: var(--fluent-text-secondary); }
+html[data-mm-fluent] #moreDmModal .multi-select__help { font: 400 12px/18px var(--fluent-font); color: var(--fluent-text-secondary); }
+html[data-mm-fluent] #moreDmModal .react-select__control { border-radius: 6px; border-color: var(--fluent-stroke-control); background: var(--fluent-control); }
+html[data-mm-fluent] :is(.GenericModal__header h1, .GenericModal__header h2, .GenericModal__header h3, .modal-header__title) {
+    font: 600 20px/28px var(--fluent-font);
+    letter-spacing: normal;
+}
+html[data-mm-fluent] .UserSettingsModal .settings-links {
+    background: var(--fluent-fill-subtle);
+    border-right: 1px solid var(--fluent-stroke-subtle);
+    padding: 12px;
+}
+html[data-mm-fluent] .UserSettingsModal .nav-pills__tab {
+    border-radius: 6px;
+    color: var(--fluent-text-secondary);
+    font: 400 14px/20px var(--fluent-font);
+    margin-bottom: 4px;
+}
+html[data-mm-fluent] .UserSettingsModal .nav-pills__tab.active {
+    color: var(--fp-ink);
+    background: var(--fluent-fill-selected);
+    box-shadow: inset 3px 0 var(--fp-accent);
+}
+html[data-mm-fluent] .UserSettingsModal :is(.settings-content, .settings-table) { background: transparent; }
+html[data-mm-fluent] .UserSettingsModal .section-min { padding-block: 16px; border-color: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] .UserSettingsModal .section-min__title { font: 600 14px/20px var(--fluent-font); }
+html[data-mm-fluent] .UserSettingsModal .section-min__describe { font: 400 13px/20px var(--fluent-font); color: var(--fluent-text-secondary); }
+html[data-mm-fluent] .UserSettingsModal :is(.divider-dark, .divider-light) { border-color: var(--fluent-stroke-subtle); }
+html[data-mm-fluent] :is(.Menu__content, .suggestion-list) { padding: 4px; }
+html[data-mm-fluent] .Menu__content :is(.MenuItem, .MenuItem__primary-text) { font-family: var(--fluent-font); }
+html[data-mm-fluent] .Menu__content .MenuItem { border-radius: 6px; }
+html[data-mm-fluent] :is(.sidebar--right__title, .sidebar--right__header) { letter-spacing: normal; }
+html[data-mm-fluent] #sidebar-right :is(.search-item-container, .search-item__container) {
+    border-color: var(--fluent-stroke-subtle);
+    background: transparent;
+}
+html[data-mm-fluent] #sidebar-right :is(.no-results__title, .empty-state__title) { font: 600 18px/26px var(--fluent-font); }
+html[data-mm-fluent] #sidebar-right :is(.no-results__subtitle, .empty-state__description) { color: var(--fluent-text-secondary); font: 400 14px/22px var(--fluent-font); }
+/* Use one blur per transient surface, with an inexpensive opaque opt-out. */
+html[data-mm-fluent-material='solid'] :is(.Menu__content, .modal-content, .suggestion-list, .login-body-card, .content-layout-column) { backdrop-filter: none !important; }
+@media (prefers-reduced-transparency: reduce) {
+    html[data-mm-fluent] :is(.Menu__content, .modal-content, .suggestion-list, .login-body-card, .content-layout-column) { backdrop-filter: none !important; background: var(--fp-surface) !important; }
+}
+@media (max-width: 700px) {
+    html[data-mm-fluent] :is(.GenericModal__header, .modal-header) { padding: 16px; }
+    html[data-mm-fluent] .UserSettingsModal .settings-links { padding: 8px; }
+}
+
+/* A focused sign-in layout at every width; override the webapp's more-specific
+ * responsive hero rules, which otherwise restore giant type and a bare form. */
+html[data-mm-fluent-surface='auth'] .login-body { padding: 24px !important; min-height: calc(100vh - 176px); }
+html[data-mm-fluent-surface='auth'] .login-body-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: min(100%, 440px) !important;
+    gap: 20px !important;
+    margin: auto !important;
+    height: auto !important;
+    flex: 0 0 auto !important;
+}
+html[data-mm-fluent-surface='auth'] .login-body-message { flex: 0 0 auto !important; width: 100% !important; max-width: 100% !important; text-align: center !important; }
+html[data-mm-fluent-surface='auth'] .login-body-message-title { font: 600 30px/38px var(--fluent-font) !important; letter-spacing: -0.5px !important; }
+html[data-mm-fluent-surface='auth'] .login-body-message-subtitle { font: 400 14px/22px var(--fluent-font) !important; margin-top: 12px !important; }
+html[data-mm-fluent-surface='auth'] .login-body-action { flex: 0 0 auto !important; width: 100% !important; }
+html[data-mm-fluent-surface='auth'] .login-body-card {
+    width: 100% !important;
+    margin: 0 !important;
+    border: 1px solid var(--fluent-stroke-control) !important;
+    border-radius: 12px !important;
+    background: var(--fp-panel) !important;
+    box-shadow: var(--fp-shadow) !important;
+}
+html[data-mm-fluent-surface='auth'] .login-body-card-content { padding: 24px !important; }
+html[data-mm-fluent-surface='auth'] .login-body-card .Input_container { background: transparent !important; }
+html[data-mm-fluent-surface='auth'] .login-body-card .Input_fieldset { border-radius: 6px; background: var(--fluent-control); }
+html[data-mm-fluent-surface='auth'] .login-body-card .Input { background: transparent !important; }
+html[data-mm-fluent-surface='auth'] .header-logo-link { color: var(--fp-ink); }
+html[data-mm-fluent-surface='auth'] .header-logo-link svg { fill: currentColor; }
+html[data-mm-fluent-surface='auth'] .header-logo-link svg path { fill: var(--fp-ink) !important; }
+@media (max-width: 600px) {
+    html[data-mm-fluent-surface='auth'] .login-body { padding: 16px !important; }
+    html[data-mm-fluent-surface='auth'] .login-body-card-content { padding: 20px !important; }
+}
