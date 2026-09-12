@@ -1,4 +1,4 @@
-// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+﻿// Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 const semver = require('semver');
 
@@ -27,7 +27,7 @@ const config = {
     },
     extraMetadata: {
         main: 'index.js',
-        fluentBuild: 'preview.31',
+        fluentBuild: 'preview.32',
         upstreamVersion: '6.3.0',
     },
     files: [
@@ -235,3 +235,4 @@ if (process.env.CI_MAC_ZIP_ONLY) {
 }
 
 module.exports = config;
+

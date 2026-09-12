@@ -1,6 +1,7 @@
 // Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import fs from 'fs';
 import path from 'path';
 import {pathToFileURL} from 'url';
 
@@ -146,6 +147,11 @@ function initializeArgs() {
 
     if (global.args.dataDir) {
         app.setPath('userData', path.resolve(global.args.dataDir));
+    }
+
+    // UPDATE_PATHS listeners may persist state immediately, before Electron is ready.
+    fs.mkdirSync(app.getPath('userData'), {recursive: true});
+    if (global.args.dataDir) {
         updatePaths(true);
     }
 }

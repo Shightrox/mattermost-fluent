@@ -1,12 +1,14 @@
 // Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import fs from 'fs';
 import path from 'path';
 
 import {app, session} from 'electron';
 
 import NavigationManager from 'app/navigationManager';
 import Config from 'common/config';
+import {updatePaths} from 'main/constants';
 import parseArgs from 'main/ParseArgs';
 
 import {initialize} from './initialize';
@@ -291,6 +293,14 @@ describe('main/app/initialize', () => {
             });
             await initialize();
             expect(app.setPath).toHaveBeenCalledWith('userData', '/basedir/some/dir');
+            expect(fs.mkdirSync).toHaveBeenCalledWith('/basedir/userData', {recursive: true});
+            expect(updatePaths).toHaveBeenCalledWith(true);
+            expect(fs.mkdirSync.mock.invocationCallOrder[0]).toBeLessThan(updatePaths.mock.invocationCallOrder[0]);
+        });
+
+        it('creates the default profile directory before configuration initialization', async () => {
+            await initialize();
+            expect(fs.mkdirSync).toHaveBeenCalledWith('/basedir/userData', {recursive: true});
         });
     });
 

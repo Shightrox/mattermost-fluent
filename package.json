@@ -1,7 +1,7 @@
 {
   "name": "mattermost-fluent",
   "productName": "Mattermost Fluent",
-  "version": "6.3.0-fluent.31",
+  "version": "6.3.0-fluent.32",
   "description": "Personal Fluent desktop client for Mattermost",
   "main": "dist/index.js",
   "author": "Mattermost, Inc. <feedback@mattermost.com>",
