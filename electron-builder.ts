@@ -58,6 +58,7 @@ const config = {
             to: '.',
             filter: '**/*',
         },
+        '!**/*.map',
     ],
     protocols: [
         {
