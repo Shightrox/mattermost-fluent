@@ -24,7 +24,15 @@ if (-not (Test-Path -LiteralPath $archivePath)) {
     & curl.exe -L --fail --silent --show-error 'https://github.com/mattermost/desktop/releases/download/v6.3.0/mattermost-desktop-6.3.0-win-x64.zip' -o $archivePath
     if ($LASTEXITCODE -ne 0) { throw 'Official release download failed' }
 }
-if ((Get-FileHash -LiteralPath $archivePath -Algorithm SHA256).Hash -ne $expectedHash) {
+$hashStream = [IO.File]::OpenRead($archivePath)
+$sha256 = [Security.Cryptography.SHA256]::Create()
+try {
+    $archiveHash = [BitConverter]::ToString($sha256.ComputeHash($hashStream)).Replace('-', '')
+} finally {
+    $hashStream.Dispose()
+    $sha256.Dispose()
+}
+if ($archiveHash -ne $expectedHash) {
     throw 'Official release SHA256 mismatch; no binaries were installed.'
 }
 Add-Type -AssemblyName System.IO.Compression.FileSystem
