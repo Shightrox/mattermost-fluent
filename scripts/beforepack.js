@@ -43,6 +43,12 @@ async function ensureKoffiBinary(context) {
 exports.default = async function beforePack(context) {
     await ensureKoffiBinary(context);
 
+    // The dependency collector can include maps despite application file filters.
+    // These published dependency maps are not needed by the packaged runtime.
+    for (const name of ['index.js.map', 'registry.js.map']) {
+        fs.rmSync(path.join(rootDir, 'node_modules/registry-js/dist/lib', name), {force: true});
+    }
+
     // The debian packager (fpm) complains when the directory to output the package to doesn't exist
     // So we have to manually create it first
     const dir = path.join(context.outDir, context.packager.appInfo.version);
