@@ -1,7 +1,7 @@
 {
   "name": "mattermost-fluent",
   "productName": "Mattermost Fluent",
-  "version": "6.3.0",
+  "version": "6.3.0-fluent.31",
   "description": "Personal Fluent desktop client for Mattermost",
   "main": "dist/index.js",
   "author": "Mattermost, Inc. <feedback@mattermost.com>",
@@ -58,7 +58,7 @@
     "package:linux-pkg": "npm run build-prod && npm run package:linux:arch-x64 -- deb rpm flatpak --x64 --publish=never && npm run package:linux:arch-arm64 -- deb rpm flatpak --arm64 --publish=never",
     "package:linux-appImage": "npm run build-prod && npm run package:linux:arch-x64 -- tar.gz appimage --x64 --publish=never && npm run package:linux:arch-arm64 -- tar.gz appimage --arm64 --publish=never",
     "setup:windows": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-fluent-windows.ps1",
-    "package:fluent": "npm run build-prod && electron-builder --win zip --x64 --publish=never -c.npmRebuild=false",
+    "package:fluent": "npm run build-prod && electron-builder --win nsis zip --x64 --publish=never -c.npmRebuild=false",
     "test:fluent": "node scripts/test-fluent.cjs"
   },
   "jest": {

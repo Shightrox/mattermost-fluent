@@ -209,6 +209,15 @@ const config = {
         upgradeCode: '{EA29C879-B154-4E1B-A026-54D21DCD9ED9}',
         perMachine: true,
     },
+    nsis: {
+        artifactName: '${name}-${version}-windows-${arch}-setup.${ext}',
+        oneClick: false,
+        perMachine: false,
+        allowToChangeInstallationDirectory: true,
+        runAfterFinish: false,
+        deleteAppDataOnUninstall: false,
+        shortcutName: 'Mattermost Fluent',
+    },
     rpm: {
         fpm: ['--rpm-rpmbuild-define', '_build_id_links none', '--rpm-digest=sha256'],
     },
