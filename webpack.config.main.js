@@ -42,6 +42,7 @@ module.exports = merge(base, {
     target: 'electron-main',
     resolve: {
         alias: {
+
             // The ESM entry embeds its build-machine import.meta.url when bundled.
             // Use the equivalent Node entry so public binaries contain no build path.
             yargs$: require.resolve('yargs'),
