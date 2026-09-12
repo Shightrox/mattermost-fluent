@@ -35,7 +35,7 @@ Current source preview: **31**, based on the Mattermost Desktop 6.3 code line. W
 - macOS and Linux are inherited from upstream but are not validated Fluent release targets.
 - Upstream binary update notifications are disabled for this fork.
 
-See the [release checklist](FLUENT-TODO.md) and [latest review](FLUENT-REVIEW-V31.md) for limitations and validation results.
+See the [release checklist](docs/ROADMAP.md) and [latest review](docs/VALIDATION.md) for limitations and validation results.
 
 ## Build locally
 

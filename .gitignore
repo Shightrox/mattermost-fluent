@@ -35,3 +35,10 @@ fastlane/report.xml
 .aider*
 
 artifacts/
+
+# Local development notes and retired upstream automation
+AGENTS.md
+/FLUENT*.md
+/.github/actions/
+/.github/codeql/
+/.gitlab-ci.yml
