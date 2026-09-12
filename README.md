@@ -4,7 +4,7 @@ A personal Fluent-inspired Mattermost desktop experience for Windows. Glass surf
 
 **Unofficial community fork · Windows preview · Client-side appearance**
 
-[**Download Windows preview — installer or ZIP**](https://github.com/Shightrox/mattermost-fluent/releases/tag/v6.3.0-fluent.31)
+[**Download Windows preview — installer or ZIP**](https://github.com/Shightrox/mattermost-fluent/releases/tag/v6.3.0-fluent.32)
 
 Windows x64. Preview builds are unsigned; see the release notes for installation instructions, checksums and known limitations. The ZIP uses the normal application profile, not a portable profile stored beside the executable.
 
@@ -32,7 +32,7 @@ All images use **fictional accounts and messages from an isolated localhost demo
 
 ## Preview status
 
-Current source preview: **31**, based on the Mattermost Desktop 6.3 code line. Windows is the actively tested target. Native Mica/Acrylic requires Windows 11 22H2 or later and suitable system settings; solid surfaces provide a fallback.
+Current source preview: **32**, based on the Mattermost Desktop 6.3 code line. Windows is the actively tested target. Native Mica/Acrylic requires Windows 11 22H2 or later and suitable system settings; solid surfaces provide a fallback.
 
 - Some history-loading stalls remain. No blanket FPS or performance improvement is claimed.
 - The adapter depends on recognizable server web-app markup. Compatibility across every server version and plugin is not yet verified.
