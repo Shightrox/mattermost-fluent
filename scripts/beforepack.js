@@ -46,7 +46,10 @@ exports.default = async function beforePack(context) {
     // The dependency collector can include maps despite application file filters.
     // These published dependency maps are not needed by the packaged runtime.
     for (const name of ['index.js.map', 'registry.js.map']) {
-        fs.rmSync(path.join(rootDir, 'node_modules/registry-js/dist/lib', name), {force: true});
+        const sourceMap = path.join(rootDir, 'node_modules/registry-js/dist/lib', name);
+        if (fs.existsSync(sourceMap)) {
+            fs.unlinkSync(sourceMap);
+        }
     }
 
     // The debian packager (fpm) complains when the directory to output the package to doesn't exist
