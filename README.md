@@ -4,6 +4,10 @@ A personal Fluent-inspired Mattermost desktop experience for Windows. Glass surf
 
 **Unofficial community fork · Windows preview · Client-side appearance**
 
+[**Download Windows preview — installer or ZIP**](https://github.com/Shightrox/mattermost-fluent/releases/tag/v6.3.0-fluent.31)
+
+Windows x64. Preview builds are unsigned; see the release notes for installation instructions, checksums and known limitations. The ZIP uses the normal application profile, not a portable profile stored beside the executable.
+
 ![Mattermost Fluent: ocean glass, iris accents and a fictional design conversation](docs/images/hero.png)
 
 Built on [Mattermost Desktop](https://github.com/mattermost/desktop). The client loads your server's web app and adds a local presentation layer. No server-side theme installation is required.
@@ -39,7 +43,7 @@ See the [release checklist](docs/ROADMAP.md) and [latest review](docs/VALIDATION
 
 ## Build locally
 
-Source preview: build locally; a public binary release is not yet published. Use the Node.js version specified by the repository. Windows x64 users can run npm run setup:windows instead of npm ci to prepare the verified native dependencies without the optional Visual Studio ATL component:
+Use the Node.js version specified by the repository. Windows x64 users can run `npm run setup:windows` instead of `npm ci` to prepare the verified native dependencies without the optional Visual Studio ATL component:
 
 ```sh
 npm ci
