@@ -77,21 +77,14 @@ To regenerate these assets, install the artwork-only encoder with
 `node scripts/render-repository-art.cjs` after the original showcase captures
 have been generated. The encoder is not an application dependency.
 
-## Window-level Acrylic illustration
+## Real desktop Acrylic capture
 
-`images/acrylic-window.png` is an AI-generated product illustration made with
-the built-in imagegen tool, using the synthetic `showcase-dark-web.png` as a
-reference. It is not a native Windows capture or proof of a particular opacity,
-blur radius or OS result. The UI is reconstructed by the image model.
+`images/acrylic-desktop.png` is a user-supplied, real Windows screenshot of the
+isolated Northstar Studio demo. It replaces the earlier AI illustration.
+The original image is preserved without cropping, retouching or regeneration.
 
-The scene places a fictional Notepad window behind Fluent. The lighter editor
-area shows through the frosted window shell and sidebar, while foreground chat
-content stays sharp. All names and messages come from the fictional demo;
-Notepad contains only neutral demonstration text.
-
-Generation brief: show the outer Fluent window as frosted translucent Acrylic,
-with a light Notepad window behind it, aligned blurred text silhouettes beneath
-the foreground glass, crisp foreground controls, a graphite/teal/lavender desktop,
-and the caption “Illustrative composition · Fictional demo”. Preserve the
-synthetic reference interface as closely as possible. Do not include personal
-paths, real server addresses, credentials or working-server data.
+The website behind the demo window is intentionally retained, including its
+surrounding interface, so the source of the colors showing through the native
+Acrylic material is visible. The chat contains only the fictional demo accounts
+and messages. This image is distinct from the emulated backdrop compositions
+described above; material appearance varies with Windows and application settings.

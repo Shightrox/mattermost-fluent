@@ -28,9 +28,9 @@
 
 Your existing Mattermost server, with a local presentation layer. Mica, Acrylic or solid surfaces; a quieter sidebar and room for the conversation. No server-side theme installation required.
 
-![Illustration of a Fluent window with a fictional Notepad window showing through its frosted acrylic surfaces](docs/images/acrylic-window.png)
+![Real Windows screenshot of the Fluent demo, with a website visible behind and through its acrylic window](docs/images/acrylic-desktop.png)
 
-<p align="center"><sub>AI-generated illustration of window-level Acrylic, based on our fictional demo UI. Not a native Windows screenshot; actual appearance depends on material settings and the OS.</sub></p>
+<p align="center"><sub>Real Windows capture · Fictional demo workspace · The website behind the window is intentionally visible to show Acrylic transparency.</sub></p>
 
 ## Keep the context close
 
@@ -60,7 +60,7 @@ Highlights follow the cursor. Soft ripples start where you click. Effects stop a
 
 ---
 
-All visuals use **fictional people and messages**. Screenshot compositions use production renderer captures with an emulated backdrop; the Notepad/Acrylic scene is a separately labelled AI illustration. [How the showcase was made](docs/SHOWCASE.md).
+All chat content uses **fictional people and messages**. The Acrylic scene above is a real desktop screenshot; the other showcase compositions use production renderer captures with an emulated backdrop. [How the showcase was made](docs/SHOWCASE.md).
 
 <details>
 <summary><strong>Installation &amp; preview limitations</strong></summary>
