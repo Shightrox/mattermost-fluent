@@ -60,3 +60,19 @@ profile/session files.
 
 Captions are English for the public repository. No performance guarantees are
 encoded in the artwork.
+
+## Repository presentation
+
+`cover.png` and `social-preview.png` frame the existing synthetic dark capture
+in a 1280 × 640 layout. `theme-gallery.png` places the three existing appearances
+side by side. Cropping and rotation are presentation choices, not new UI states.
+
+`liquid.gif` records the real `createFluentLiquid` implementation and its CSS
+on two isolated demonstration buttons. It uses scripted pointer movement and
+clicks, a visible cursor marker, and GIF encoding; its playback is not evidence
+of application frame rate. It does not use a connected workspace.
+
+To regenerate these assets, install the artwork-only encoder with
+`npm install --prefix artifacts/visual-tools gifenc@1.0.3` and run
+`node scripts/render-repository-art.cjs` after the original showcase captures
+have been generated. The encoder is not an application dependency.
