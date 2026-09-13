@@ -102,6 +102,6 @@ Localhost fixtures and generated sessions belong in ignored `artifacts/`. Never 
 
 Based on [Mattermost Desktop](https://github.com/mattermost/desktop), originally created as electron-mattermost by Yuya Ochiai. Inspired by Fluent design and the restrained visual direction of Fluenty for Steam. This fork is not an official Mattermost or Microsoft product.
 
-[Apache 2.0 license](LICENSE.txt) · [Notices](NOTICE.txt) · [Fluent icon notices](NOTICE-Fluent-Icons.txt) · [Source provenance](docs/PROVENANCE.md)
+[Apache 2.0 license](LICENSE.txt) · [Notices](NOTICE.txt) · [Fluent icon notices](NOTICE-Fluent-Icons.txt) · [Source provenance](CONTRIBUTING.md#source-provenance)
 
 </details>

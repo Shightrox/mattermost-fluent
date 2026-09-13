@@ -119,7 +119,6 @@
         {
             "files": [
                 "webpack.config.renderer.js",
-                "CHANGELOG.md",
                 "webpack.config.base.js",
                 "./babel.config.js",
                 "README.md",
