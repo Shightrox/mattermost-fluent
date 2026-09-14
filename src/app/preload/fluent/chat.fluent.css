@@ -308,11 +308,63 @@ html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(
 html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-image__column:has(.file-icon) .file-icon { width: 32px; height: 32px; margin: 6px; background-size: contain; }
 html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__header .col__name { min-width: 0; }
 html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__header .user-popover { max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
-html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post__hover-actions {
+/* The server owns actions, permissions, keyboard focus and menu visibility.
+ * Anchor its toolbar to the conversation lane instead of the far row edge.
+ * Keep it out of flow so hovering never changes virtualized row heights. */
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__content { position: relative; }
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post__header { position: static; }
+html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post-menu {
+    top: auto;
+    bottom: calc(100% - 8px);
+    left: 58px;
+    right: auto;
+    width: max-content;
+    max-width: calc(100% - 74px);
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+html[data-mm-fluent] #channel_view [data-testid='postView'].current--user:not(.post--system, .system-message, .system--message) .post-menu {
+    left: auto;
+    right: 58px;
+    justify-content: flex-end;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu {
+    gap: 2px;
+    padding: 4px;
+    border-radius: 12px;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post:is(:hover, .post--hovered, .a11y--active, :focus-within) .post-menu {
     border: 1px solid var(--fluent-stroke-control);
+    background: color-mix(in srgb, var(--fp-surface) 96%, var(--fp-accent));
+    box-shadow: inset 0 1px var(--fluent-chat-highlight), 0 6px 20px rgb(0 0 0 / 16%);
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item {
+    min-width: 30px;
+    height: 30px;
     border-radius: 8px;
-    background: var(--fp-surface);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+    color: var(--fluent-text-secondary);
+    fill: currentColor;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item:hover {
+    background: var(--fluent-fill-hover);
+    color: var(--fp-ink);
+    fill: currentColor;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item:is(:active, .post-menu__item--active, .post-menu__item--selected, [aria-expanded='true']) {
+    background: var(--fluent-fill-selected);
+    color: var(--fp-accent);
+    fill: currentColor;
+}
+html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item:focus-visible { outline: 2px solid var(--fp-accent); outline-offset: -2px; }
+@media (max-width: 900px) {
+    html[data-mm-fluent] #channel_view [data-testid='postView']:not(.post--system, .system-message, .system--message) .post-menu { left: 50px; max-width: calc(100% - 58px); }
+    html[data-mm-fluent] #channel_view [data-testid='postView'].current--user:not(.post--system, .system-message, .system--message) .post-menu { left: auto; right: 50px; }
+}
+html[data-mm-fluent][data-mm-fluent-motion='on'] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item {
+    transition: background-color 120ms ease-out, color 120ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+    html[data-mm-fluent] :is(#channel_view, #sidebar-right) .post-menu .post-menu__item { transition: none !important; }
 }
 
 html[data-mm-fluent] .FluentSearch {
