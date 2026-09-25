@@ -551,8 +551,6 @@ export function createPersonalGifs(doc: Document, win: Window) {
             const entry = button(t('Мои GIF', 'My GIFs'), () => open(entry, picker));
             const reference = Array.from(tabs.querySelectorAll<HTMLElement>('button, a')).at(-1);
             if (reference) {
-                entry.className = reference.className;
-                entry.style.font = win.getComputedStyle(reference).font;
                 const icon = reference.querySelector('svg, .icon, i');
                 if (icon) {
                     const copy = icon.cloneNode(true) as Element;

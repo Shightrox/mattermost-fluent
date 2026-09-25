@@ -27,3 +27,10 @@ html[data-mm-fluent] #emojiGifPicker .FluentGifsTab button:hover { background: t
 html[data-mm-fluent] #emojiGifPicker .FluentGifsTab button[aria-expanded='true'] { border-bottom-color: var(--fp-accent); background: transparent; color: var(--fp-accent); }
 html[data-mm-fluent] #emojiGifPicker .FluentGifsTab :is(svg, i) { width: 18px; height: 18px; font-size: 18px; fill: currentColor; }
 html[data-mm-fluent] #emojiGifPicker[data-fluent-gifs-open] :is(.nav-tabs, [role='tablist']) > :not(.FluentGifsTab) :is(a, button) { border-bottom-color: transparent !important; color: var(--fluent-text-secondary) !important; }
+/* Native emoji tabs were sized for two items. Give all three intrinsic widths
+ * and one shared baseline; never squeeze the personal label onto two lines. */
+html[data-mm-fluent] #emojiGifPicker :is(.nav-tabs, [role='tablist']):has(.FluentGifsTab) { display: flex; flex: 0 0 40px; justify-content: flex-start; align-items: stretch; gap: 2px; width: 100%; min-width: 0; height: 40px; padding: 0 8px; margin: 0; box-sizing: border-box; }
+html[data-mm-fluent] #emojiGifPicker :is(.nav-tabs, [role='tablist']):has(.FluentGifsTab) > li { display: flex; flex: 0 0 auto; width: auto; min-width: max-content; height: 40px; margin: 0; padding: 0; }
+html[data-mm-fluent] #emojiGifPicker :is(.nav-tabs, [role='tablist']):has(.FluentGifsTab) > li > :is(a, button) { display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: auto; min-width: max-content; height: 40px; padding: 0 10px !important; margin: 0 !important; box-sizing: border-box; white-space: nowrap; font: 600 12px/18px var(--fluent-font); }
+html[data-mm-fluent] #emojiGifPicker :is(.nav-tabs, [role='tablist']):has(.FluentGifsTab) > li > :is(a, button) :is(svg, i) { position: static; flex: 0 0 18px; width: 18px; height: 18px; margin: 0; vertical-align: middle; }
+html[data-mm-fluent] .FluentGifs { box-sizing: border-box; }
