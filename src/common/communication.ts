@@ -1,5 +1,6 @@
 // Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
+export const PERSONAL_GIFS = 'personal-gifs';
 
 // Main-to-preload only. Never exposed through the server's desktopAPI.
 export const FLUENT_SETTINGS_CHANGED = 'fluent-settings-changed';

@@ -1,0 +1,29 @@
+/* Copyright (c) 2016-present Mattermost, Inc. All Rights Reserved.
+ * See LICENSE.txt for license information. */
+html[data-mm-fluent] .FluentGifsTrigger { min-width: 30px; height: 30px; padding: 0 4px; border: 0; border-radius: 7px; background: transparent; color: var(--fluent-text-secondary); font: 600 11px var(--fluent-font); }
+html[data-mm-fluent] .FluentGifs { position: fixed; z-index: 1500; right: 24px; bottom: 90px; display: flex; flex-direction: column; gap: 10px; width: min(390px, calc(100vw - 24px)); height: min(510px, calc(100vh - 120px)); padding: 14px; border: 1px solid var(--fluent-stroke-control); border-radius: 16px; background: var(--fp-surface); color: var(--fp-ink); box-shadow: 0 12px 40px rgb(0 0 0 / 22%); font: 400 13px/20px var(--fluent-font); }
+html[data-mm-fluent] #emojiGifPicker:has(.FluentGifs--tab) { position: relative; }
+html[data-mm-fluent] .FluentGifs--tab { position: absolute; inset: 44px 0 0; width: 100%; height: auto; border-radius: 0 0 12px 12px; box-shadow: none; z-index: 2; }
+html[data-mm-fluent] .FluentGifs header { display: flex; align-items: center; justify-content: space-between; }
+html[data-mm-fluent] .FluentGifs nav { display: flex; gap: 8px; }
+html[data-mm-fluent] .FluentGifs :is(header, nav, input, .FluentGifs__status) { flex-shrink: 0; }
+html[data-mm-fluent] :is(.FluentGifs, .FluentGifsTab) button { border: 0; border-radius: 8px; padding: 6px 10px; background: var(--fluent-control); color: var(--fp-ink); font: inherit; cursor: pointer; }
+html[data-mm-fluent] :is(.FluentGifs, .FluentGifsTab) button:hover, html[data-mm-fluent] .FluentGifsTrigger:hover { background: var(--fluent-fill-hover); }
+html[data-mm-fluent] :is(.FluentGifs, .FluentGifsTab, .FluentGifsTrigger) :focus-visible { outline: 2px solid var(--fp-accent); outline-offset: 1px; }
+html[data-mm-fluent] .FluentGifs input { width: 100%; min-height: 34px; padding: 6px 10px; border: 1px solid var(--fluent-stroke-control); border-radius: 8px; background: var(--fluent-control); color: var(--fp-ink); font: inherit; }
+html[data-mm-fluent] .FluentGifs__grid { flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-content: start; gap: 8px; overflow: auto; }
+html[data-mm-fluent] .FluentGifs__grid > p { grid-column: 1 / -1; padding: 20px 10px; color: var(--fluent-text-secondary); }
+html[data-mm-fluent] .FluentGifs__card { position: relative; min-width: 0; }
+html[data-mm-fluent] .FluentGifs .FluentGifs__use { display: flex; width: 100%; height: 116px; padding: 6px; flex-direction: column; align-items: center; justify-content: center; gap: 4px; overflow: hidden; }
+html[data-mm-fluent] .FluentGifs__use :is(img, canvas) { width: 100%; height: 80px; min-height: 0; object-fit: contain; border-radius: 5px; }
+html[data-mm-fluent] .FluentGifs__use span { width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; }
+html[data-mm-fluent] .FluentGifs .FluentGifs__remove { position: absolute; right: 2px; top: 2px; width: 24px; height: 24px; padding: 0; background: var(--fp-surface); }
+html[data-mm-fluent] .FluentGifs__status { min-height: 20px; margin: 0; font-size: 11px; color: var(--fluent-text-secondary); }
+html[data-mm-fluent] .FluentGifsTab button[aria-expanded='true'] { color: var(--fp-accent); background: var(--fluent-fill-selected); }
+/* Match the native picker navigation, including its underline rather than a pill. */
+html[data-mm-fluent] #emojiGifPicker .FluentGifsTab { display: flex; align-self: stretch; margin: 0; padding: 0; }
+html[data-mm-fluent] #emojiGifPicker .FluentGifsTab button { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 40px; margin: 0; padding: 0 12px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: transparent; color: var(--fluent-text-secondary); font: 600 12px/18px var(--fluent-font); }
+html[data-mm-fluent] #emojiGifPicker .FluentGifsTab button:hover { background: transparent; color: var(--fp-ink); }
+html[data-mm-fluent] #emojiGifPicker .FluentGifsTab button[aria-expanded='true'] { border-bottom-color: var(--fp-accent); background: transparent; color: var(--fp-accent); }
+html[data-mm-fluent] #emojiGifPicker .FluentGifsTab :is(svg, i) { width: 18px; height: 18px; font-size: 18px; fill: currentColor; }
+html[data-mm-fluent] #emojiGifPicker[data-fluent-gifs-open] :is(.nav-tabs, [role='tablist']) > :not(.FluentGifsTab) :is(a, button) { border-bottom-color: transparent !important; color: var(--fluent-text-secondary) !important; }

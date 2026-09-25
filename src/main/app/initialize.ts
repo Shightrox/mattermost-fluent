@@ -56,6 +56,7 @@ import NonceManager from 'main/nonceManager';
 import {getDoNotDisturb} from 'main/notifications';
 import parseArgs from 'main/ParseArgs';
 import PerformanceMonitor from 'main/performanceMonitor';
+import {registerPersonalGifs} from 'main/personalGifs';
 import secureStorage from 'main/secureStorage';
 import AllowProtocolDialog from 'main/security/allowProtocolDialog';
 import {shouldCancelLocalNetworkRequest} from 'main/security/localNetworkAccess';
@@ -252,6 +253,7 @@ function initializeBeforeAppReady() {
 }
 
 function initializeInterCommunicationEventListeners() {
+    registerPersonalGifs();
     ipcMain.handle(NOTIFY_MENTION, ipcValidate(handleMentionNotification, [
         Joi.string().allow('').required(),
         Joi.string().allow('').required(),

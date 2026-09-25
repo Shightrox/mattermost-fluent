@@ -14,6 +14,11 @@ import type {DownloadedItems} from 'types/downloads';
 import type {SavedWindowState} from 'types/mainWindow';
 
 const log = new Logger('Validator');
+export const personalGifRequestSchema = Joi.alternatives().try(
+    Joi.object({op: Joi.string().valid('list').required()}),
+    Joi.object({op: Joi.string().valid('read', 'remove').required(), id: Joi.string().pattern(/^[a-f0-9]{64}$/).required()}),
+    Joi.object({op: Joi.string().valid('import').required(), name: Joi.string().max(180).required(), data: Joi.string().base64().max(11184812).required()}),
+).required();
 const defaultOptions = {
     stripUnknown: true,
 };
